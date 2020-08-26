@@ -7,6 +7,7 @@ import androidx.viewpager2.widget.CompositePageTransformer;
 import androidx.viewpager2.widget.MarginPageTransformer;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
@@ -57,7 +58,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         viewPager2.setPageTransformer(compositePageTransformer);
-
 
 
         /*
