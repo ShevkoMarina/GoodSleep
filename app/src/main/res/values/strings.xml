@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">GoodSleep</string>
+    <string name="rain">Rain</string>
+    <string name="rainstorm">Rainstorm</string>
 </resources>
