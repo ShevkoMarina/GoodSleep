@@ -33,7 +33,7 @@ public class CardActivity extends AppCompatActivity {
     TextView mTVTimer, tvSoundName;
     MediaPlayer mPlayer;
     AudioManager mAudioManager;
-    ConstraintLayout mMainContainer;
+    ImageView mCardActivityBackground;
     int maxVolume;
     boolean isMusicPlaying;
 
@@ -47,10 +47,8 @@ public class CardActivity extends AppCompatActivity {
         mAddButton = findViewById(R.id.addSoundtrackButton);
         mVolumeBar = findViewById(R.id.volumeSeekBar);
         tvSoundName = findViewById(R.id.soundName);
-        mMainContainer = findViewById(R.id.card_activity_container);
+        mCardActivityBackground = findViewById(R.id.card_activity_background);
         isMusicPlaying = true;
-
-
 
         InitTimePicker();
         InitVolumeBar();
@@ -60,7 +58,7 @@ public class CardActivity extends AppCompatActivity {
         Intent intent = getIntent();
         SoundItem soundItem = intent.getParcelableExtra("Sound Item");
         tvSoundName.setText(soundItem.getName());
-        mMainContainer.setBackgroundResource(soundItem.getImageSrc());
+        mCardActivityBackground.setImageResource(soundItem.getImageSrc());
         mPlayer = MediaPlayer.create(this, soundItem.getSoundTracks()[0]);
 
 
@@ -152,6 +150,4 @@ public class CardActivity extends AppCompatActivity {
             }
         });
     }
-
-
 }

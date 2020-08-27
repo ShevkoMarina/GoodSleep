@@ -7,6 +7,18 @@
     android:layout_height="match_parent"
     tools:context=".CardActivity">
 
+    <ImageView
+        android:id="@+id/card_activity_background"
+        style="@style/BackGroundImageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"/>
+
     <LinearLayout
         android:id="@+id/buttonPanel"
         android:layout_width="0dp"
@@ -76,7 +88,7 @@
         android:layout_height="wrap_content"
         android:text=""
         android:fontFamily="sans-serif-light"
-        android:textSize="20dp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"

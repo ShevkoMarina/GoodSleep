@@ -59,11 +59,12 @@ public class MainActivity extends AppCompatActivity {
 
     private void createSoundItems() {
         SoundItems = new ArrayList<>();
-        SoundItems.add(new SoundItem(R.drawable.image1, "Rain", new int[] {R.raw.kukushka}));
-        SoundItems.add(new SoundItem(R.drawable.image1, "Rain", new int[] {R.raw.kukushka}));
-        SoundItems.add(new SoundItem(R.drawable.image1, "Rain", new int[] {R.raw.kukushka}));
-        SoundItems.add(new SoundItem(R.drawable.image1, "Rain", new int[] {R.raw.kukushka}));
-        SoundItems.add(new SoundItem(R.drawable.image1, "Rain", new int[] {R.raw.kukushka}));
+        SoundItems.add(new SoundItem(R.drawable.rain_on_window, "Rain on window", new int[] {R.raw.rain_on_window}));
+        SoundItems.add(new SoundItem(R.drawable.thunder, "Thunderstorm", new int[] {R.raw.thunderstorm}));
+        SoundItems.add(new SoundItem(R.drawable.light_rain, "Light rain", new int[] {R.raw.light_rain}));
+        SoundItems.add(new SoundItem(R.drawable.heavy_rain, "Heavy rain", new int[] {R.raw.heavy_rain}));
+        SoundItems.add(new SoundItem(R.drawable.steady_rain, "Steady rain", new int[] {R.raw.steady_rain}));
+        SoundItems.add(new SoundItem(R.drawable.rain_on_umbrella, "Rain on umbrella", new int[] {R.raw.rain_falls_on_umbrella}));
     }
     
     private void InitHorizontalRecycleView() {
