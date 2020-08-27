@@ -7,38 +7,54 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager2.widget.ViewPager2;
-
 import java.util.List;
 
 public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.SliderViewHolder> {
 
-    private List<SliderItem> sliderItems;
-    private ViewPager2 vIewPager2;
+    private OnItemClickListener mListener;
+    private List<SoundItem> soundItems;
 
-    public SliderAdapter(List<SliderItem> sliderItems, ViewPager2 vIewPager2) {
-        this.sliderItems = sliderItems;
-        this.vIewPager2 = vIewPager2;
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        mListener = listener;
+    }
+
+    public SliderAdapter(List<SoundItem> soundItems) {
+        this.soundItems = soundItems;
     }
 
     static class SliderViewHolder extends RecyclerView.ViewHolder {
         private ImageView imageView;
         private TextView textView;
 
-        public SliderViewHolder(@NonNull View itemView) {
+        public SliderViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
              super(itemView);
              imageView = itemView.findViewById(R.id.image_for_card);
              textView = itemView.findViewById(R.id.text_for_card);
+
+             itemView.setOnClickListener(new View.OnClickListener() {
+                 @Override
+                 public void onClick(View v) {
+                     if (listener != null) {
+                         int position = getAdapterPosition();
+                         if (position != RecyclerView.NO_POSITION) {
+                             listener.onItemClick(position);
+                         }
+                     }
+                 }
+             });
         }
 
-        void setImage (SliderItem sliderItem) {
-            imageView.setImageResource(sliderItem.getImage());
+        void setImage (SoundItem soundItem) {
+            imageView.setImageResource(soundItem.getImageSrc());
         }
 
-        void setText (SliderItem sliderItem) {
-            textView.setText(sliderItem.getText());
+        void setText (SoundItem soundItem) {
+            textView.setText(soundItem.getName());
         }
     }
 
@@ -50,18 +66,18 @@ public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.SliderView
                         R.layout.slide_item,
                         parent,
                         false
-                )
+                ), mListener
         );
     }
 
     @Override
     public void onBindViewHolder(@NonNull SliderViewHolder holder, int position) {
-        holder.setImage(sliderItems.get(position));
-        holder.setText(sliderItems.get(position));
+        holder.setImage(soundItems.get(position));
+        holder.setText(soundItems.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return sliderItems.size();
+        return soundItems.size();
     }
 }
