@@ -4,6 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.app.TimePickerDialog;
 import android.content.Intent;
@@ -16,6 +19,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
@@ -38,6 +42,7 @@ public class CardActivity extends AppCompatActivity {
     ImageView mCardActivityBackground;
     int maxVolume;
     boolean isMusicPlaying;
+    FragmentManager fragmentManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +60,7 @@ public class CardActivity extends AppCompatActivity {
         InitTimePicker();
         InitVolumeBar();
         InitPause();
+        InitAddButton();
 
         // Get info
         Intent intent = getIntent();
@@ -170,6 +176,20 @@ public class CardActivity extends AppCompatActivity {
                 timePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 timePickerDialog.updateTime(tHours, tMinute);
                 timePickerDialog.show();
+            }
+        });
+    }
+
+    private void InitAddButton() {
+        mAddButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fragmentManager = getSupportFragmentManager();
+                FragmentTransaction transaction = fragmentManager.beginTransaction();
+                AddSoundTracksFragment fragment = new AddSoundTracksFragment();
+                FrameLayout fragmentContainer = view.findViewById(R.id.sound_fragment_container);
+                //fragmentContainer.setVisibility(View.VISIBLE);
+                transaction.add(R.id.sound_fragment_container, fragment).commit();
             }
         });
     }
