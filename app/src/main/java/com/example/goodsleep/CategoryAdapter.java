@@ -19,7 +19,7 @@ import java.util.List;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder> {
 
-    public static SliderAdapter sliderAdapter;
+    public SliderAdapter sliderAdapter;
     private Context context;
     private List<CategoryItem> categoryItemsList;
 
