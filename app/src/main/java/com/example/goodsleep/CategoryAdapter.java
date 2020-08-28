@@ -37,7 +37,13 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
 
     @Override
     public void onBindViewHolder(@NonNull CategoryAdapter.CategoryViewHolder holder, int position) {
-        holder.categoryTitle.setText(categoryItemsList.get(position).getCategoryTitle());
+        String title = categoryItemsList.get(position).getCategoryTitle();
+
+        if (title.equals("Rain")) {
+            holder.categoryTitle.setPadding(0, 150, 0, 0);
+        }
+
+        holder.categoryTitle.setText(title);
         InitHorizontalRecycleView(holder.itemRecycler, categoryItemsList.get(position).getSoundItemList());
     }
 
@@ -70,7 +76,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
                 Intent intent = new Intent(context, CardActivity.class);
                 intent.putExtra("Sound Item", soundItems.get(position));
                 context.startActivity(intent);
-            };
+            }
         });
     }
 }

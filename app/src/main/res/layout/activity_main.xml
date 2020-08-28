@@ -23,10 +23,7 @@
         app:layout_constraintTop_toTopOf="parent"/>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:paddingTop="70dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/main_vertical_recycler_view">
-
-    </androidx.recyclerview.widget.RecyclerView>
+        android:id="@+id/main_vertical_recycler_view"/>
 </RelativeLayout>

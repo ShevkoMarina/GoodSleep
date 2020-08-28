@@ -53,7 +53,6 @@ public class MainActivity extends AppCompatActivity {
         IniVerticalRecyclerView();
     }
 
-
     private void createCategoryItems() {
         CategoryItems = new ArrayList<>();
         CategoryItems.add(new CategoryItem("Rain", createRainSoundItems()));
