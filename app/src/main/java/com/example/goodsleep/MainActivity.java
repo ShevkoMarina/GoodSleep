@@ -1,20 +1,14 @@
 package com.example.goodsleep;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
-import android.media.Image;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.text.Layout;
-import android.view.View;
-import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,9 +18,11 @@ public class MainActivity extends AppCompatActivity {
     ImageButton mCardItem;
     private MediaPlayer mPlayer1, mPlayer2;
     private List<SoundItem> SoundItems;
+    private List<CategoryItem> CategoryItems;
     private LinearLayout mLinearLayout;
-    private RecyclerView mHorizontalRecyclerView;
+    private RecyclerView mHorizontalRecyclerView, mVerticalRecyclerView;
     private SliderAdapter mAdapter;
+    private CategoryAdapter categoryAdapter;
 
     @Override
 
@@ -53,37 +49,36 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        createSoundItems();
-        InitHorizontalRecycleView();
+        createCategoryItems();
+        IniVerticalRecyclerView();
     }
 
-    private void createSoundItems() {
-        SoundItems = new ArrayList<>();
-        SoundItems.add(new SoundItem(R.drawable.rain_on_window, "Rain on window", new int[] {R.raw.rain_on_window}));
-        SoundItems.add(new SoundItem(R.drawable.thunder, "Thunderstorm", new int[] {R.raw.thunderstorm}));
-        SoundItems.add(new SoundItem(R.drawable.light_rain, "Light rain", new int[] {R.raw.light_rain}));
-        SoundItems.add(new SoundItem(R.drawable.heavy_rain, "Heavy rain", new int[] {R.raw.heavy_rain}));
-        SoundItems.add(new SoundItem(R.drawable.steady_rain, "Steady rain", new int[] {R.raw.steady_rain}));
-        SoundItems.add(new SoundItem(R.drawable.rain_on_umbrella, "Rain on umbrella", new int[] {R.raw.rain_falls_on_umbrella}));
+
+    private void createCategoryItems() {
+        CategoryItems = new ArrayList<>();
+        CategoryItems.add(new CategoryItem("Rain", createRainSoundItems()));
+        CategoryItems.add(new CategoryItem("Nature", createRainSoundItems()));
+        CategoryItems.add(new CategoryItem("Sea", createRainSoundItems()));
+        CategoryItems.add(new CategoryItem("Night", createRainSoundItems()));
     }
-    
-    private void InitHorizontalRecycleView() {
-        mHorizontalRecyclerView = findViewById(R.id.main_h_recyclerView);
-        LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        mAdapter = new SliderAdapter(SoundItems);
 
-        mHorizontalRecyclerView.setLayoutManager(mLinearLayoutManager);
-        mHorizontalRecyclerView.setAdapter(mAdapter);
-        mHorizontalRecyclerView.setItemAnimator(new DefaultItemAnimator());
+    private List<SoundItem> createRainSoundItems() {
+        List<SoundItem> RainItems = new ArrayList<>();
+        RainItems.add(new SoundItem(R.drawable.rain_on_window, "Rain on window", new int[] {R.raw.rain_on_window}));
+        RainItems.add(new SoundItem(R.drawable.thunder, "Thunderstorm", new int[] {R.raw.thunderstorm}));
+        RainItems.add(new SoundItem(R.drawable.light_rain, "Light rain", new int[] {R.raw.light_rain}));
+        RainItems.add(new SoundItem(R.drawable.heavy_rain, "Heavy rain", new int[] {R.raw.heavy_rain}));
+        RainItems.add(new SoundItem(R.drawable.steady_rain, "Steady rain", new int[] {R.raw.steady_rain}));
+        RainItems.add(new SoundItem(R.drawable.rain_on_umbrella, "Rain on umbrella", new int[] {R.raw.rain_falls_on_umbrella}));
+        return RainItems;
+    }
 
-        mAdapter.setOnItemClickListener(new SliderAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(int position) {
-                Intent intent = new Intent(MainActivity.this, CardActivity.class);
-                intent.putExtra("Sound Item", SoundItems.get(position));
-                startActivity(intent);
-            }
-        });
+    private void IniVerticalRecyclerView() {
+        mVerticalRecyclerView = findViewById(R.id.main_vertical_recycler_view);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        mVerticalRecyclerView.setLayoutManager(layoutManager);
+        categoryAdapter = new CategoryAdapter(this, CategoryItems);
+        mVerticalRecyclerView.setAdapter(categoryAdapter);
     }
 
     private void stopPlay1() {

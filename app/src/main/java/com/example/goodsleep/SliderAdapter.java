@@ -1,5 +1,6 @@
 package com.example.goodsleep;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.solver.widgets.ConstraintAnchor;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
@@ -14,6 +16,7 @@ public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.SliderView
 
     private OnItemClickListener mListener;
     private List<SoundItem> soundItems;
+    private Context context;
 
     public interface OnItemClickListener {
         void onItemClick(int position);
@@ -23,8 +26,9 @@ public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.SliderView
         mListener = listener;
     }
 
-    public SliderAdapter(List<SoundItem> soundItems) {
+    public SliderAdapter(List<SoundItem> soundItems, Context context) {
         this.soundItems = soundItems;
+        this.context = context;
     }
 
     static class SliderViewHolder extends RecyclerView.ViewHolder {
@@ -62,7 +66,7 @@ public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.SliderView
     @Override
     public SliderViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new SliderViewHolder(
-                LayoutInflater.from(parent.getContext()).inflate(
+                LayoutInflater.from(context).inflate(
                         R.layout.slide_item,
                         parent,
                         false
