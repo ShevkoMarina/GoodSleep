@@ -1,14 +1,17 @@
 package com.example.goodsleep;
-import androidx.activity.OnBackPressedDispatcherOwner;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -58,12 +61,23 @@ public class MainActivity extends AppCompatActivity {
         IniVerticalRecyclerView();
     }
 
-
     @Override
-    public void onBackPressed() {
-       // do nothing
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+
+        return super.onCreateOptionsMenu(menu);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            default:
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 
     private void createCategoryItems() {
         CategoryItems = new ArrayList<>();
