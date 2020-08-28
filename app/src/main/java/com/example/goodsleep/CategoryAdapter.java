@@ -17,6 +17,7 @@ import java.util.List;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder> {
 
+    public static SliderAdapter sliderAdapter;
     private Context context;
     private List<CategoryItem> categoryItemsList;
 
@@ -58,21 +59,18 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         }
     }
 
-    private void InitHorizontalRecycleView(RecyclerView recyclerView, List<SoundItem> soundItems) {
-        SliderAdapter sliderAdapter = new SliderAdapter(soundItems, context);
+    private void InitHorizontalRecycleView(RecyclerView recyclerView, final List<SoundItem> soundItems) {
+        sliderAdapter = new SliderAdapter(soundItems, context);
         recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
         recyclerView.setAdapter(sliderAdapter);
 
-        /*
         sliderAdapter.setOnItemClickListener(new SliderAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                Intent intent = new Intent(MainActivity.this, CardActivity.class);
-                intent.putExtra("Sound Item", SoundItems.get(position));
-                startActivity(intent);
-            }
+                Intent intent = new Intent(context, CardActivity.class);
+                intent.putExtra("Sound Item", soundItems.get(position));
+                context.startActivity(intent);
+            };
         });
-
-         */
     }
 }
