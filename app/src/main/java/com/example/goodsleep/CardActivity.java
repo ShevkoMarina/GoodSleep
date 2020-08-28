@@ -111,17 +111,22 @@ public class CardActivity extends AppCompatActivity {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) {
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_VOLUME_DOWN: {
             mVolumeBar.setProgress(mAudioManager.getStreamVolume(mAudioManager.STREAM_MUSIC) - maxVolume/15);
+            break;
         }
-        if (keyCode == KeyEvent.KEYCODE_VOLUME_UP)
-        {
+            case KeyEvent.KEYCODE_VOLUME_UP: {
             mVolumeBar.setProgress(mAudioManager.getStreamVolume(mAudioManager.STREAM_MUSIC) + maxVolume/15);
+            break;
         }
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            case KeyEvent.KEYCODE_BACK: {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
             stopPlay();
+            CategoryAdapter.isItemClicked = false;
+            break;
+            }
         }
         return true;
     }

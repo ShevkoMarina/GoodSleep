@@ -1,4 +1,5 @@
 package com.example.goodsleep;
+import androidx.activity.OnBackPressedDispatcherOwner;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -7,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -55,6 +57,13 @@ public class MainActivity extends AppCompatActivity {
         createCategoryItems();
         IniVerticalRecyclerView();
     }
+
+
+    @Override
+    public void onBackPressed() {
+       // do nothing
+    }
+
 
     private void createCategoryItems() {
         CategoryItems = new ArrayList<>();
