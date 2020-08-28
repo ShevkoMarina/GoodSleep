@@ -1,5 +1,6 @@
 package com.example.goodsleep;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ReceiverCallNotAllowedException;
@@ -22,6 +23,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
     public SliderAdapter sliderAdapter;
     private Context context;
     private List<CategoryItem> categoryItemsList;
+    public static boolean isItemClicked = false;
 
     public CategoryAdapter(Context context, List<CategoryItem> categoryItems) { this.context = context;
         categoryItemsList = categoryItems;
@@ -67,7 +69,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         }
     }
 
-    private void InitHorizontalRecycleView(RecyclerView recyclerView, final List<SoundItem> soundItems) {
+    private void InitHorizontalRecycleView(final RecyclerView recyclerView, final List<SoundItem> soundItems) {
         sliderAdapter = new SliderAdapter(soundItems, context);
         recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
         recyclerView.setAdapter(sliderAdapter);
@@ -75,9 +77,12 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         sliderAdapter.setOnItemClickListener(new SliderAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                Intent intent = new Intent(context, CardActivity.class);
-                intent.putExtra("Sound Item", soundItems.get(position));
-                context.startActivity(intent);
+                if (!isItemClicked) {
+                    Intent intent = new Intent(context, CardActivity.class);
+                    intent.putExtra("Sound Item", soundItems.get(position));
+                    context.startActivity(intent);
+                    isItemClicked = true;
+                }
             }
         });
     }
