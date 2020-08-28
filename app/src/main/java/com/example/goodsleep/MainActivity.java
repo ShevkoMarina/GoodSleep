@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        /*
         mPlayer1 = MediaPlayer.create(this, R.raw.kukushka);
         mPlayer2 = MediaPlayer.create(this, R.raw.pribojj);
 
@@ -48,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
                 stopPlay1();
             }
         });
+
+         */
 
         createCategoryItems();
         IniVerticalRecyclerView();

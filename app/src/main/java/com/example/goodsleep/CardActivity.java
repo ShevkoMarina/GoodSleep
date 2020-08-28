@@ -21,6 +21,8 @@ import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -116,7 +118,23 @@ public class CardActivity extends AppCompatActivity {
         {
             mVolumeBar.setProgress(mAudioManager.getStreamVolume(mAudioManager.STREAM_MUSIC) + maxVolume/15);
         }
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+            stopPlay();
+        }
         return true;
+    }
+
+    private void stopPlay() {
+        mPlayer.stop();
+        try {
+            mPlayer.prepare();
+            mPlayer.seekTo(0);
+        }
+        catch (Throwable t) {
+            Toast.makeText(this, t.getMessage(), Toast.LENGTH_SHORT).show();
+        }
     }
 
 
