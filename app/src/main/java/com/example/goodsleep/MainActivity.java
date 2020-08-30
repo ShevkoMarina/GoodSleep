@@ -1,12 +1,9 @@
 package com.example.goodsleep;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.ActionBar;
-import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.Menu;
@@ -15,22 +12,25 @@ import android.view.MenuItem;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    ImageButton mCardItem;
+    private ImageButton mCardItem;
     private MediaPlayer mPlayer1, mPlayer2;
     private List<SoundItem> SoundItems;
     private List<CategoryItem> CategoryItems;
+    private List<CategoryButton> mCategoryButtons;
     private LinearLayout mLinearLayout;
-    private RecyclerView mHorizontalRecyclerView, mVerticalRecyclerView;
+    private RecyclerView mHorizontalRecyclerView, mVerticalRecyclerView, mButtonsRecyclerView;
     private SliderAdapter mAdapter;
     private CategoryAdapter categoryAdapter;
+    private ButtonsAdapter mButtonsAdapter;
 
     @Override
-
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
@@ -59,6 +59,30 @@ public class MainActivity extends AppCompatActivity {
 
         createCategoryItems();
         IniVerticalRecyclerView();
+        initButtonsRecyclerView();
+        setCategoryButtons();
+    }
+
+    private void setCategoryButtons() {
+        createCategoryButtons();
+        mButtonsAdapter.setItems(mCategoryButtons);
+    }
+
+    private void createCategoryButtons() {
+        mCategoryButtons = new ArrayList<>();
+        mCategoryButtons.add(new CategoryButton("All"));
+        mCategoryButtons.add(new CategoryButton("Rain"));
+        mCategoryButtons.add(new CategoryButton("Nature"));
+        mCategoryButtons.add(new CategoryButton("Sea"));
+        mCategoryButtons.add(new CategoryButton("Night"));
+    }
+
+    private void initButtonsRecyclerView() {
+        mButtonsRecyclerView = findViewById(R.id.buttons_recycler_view);
+        mButtonsRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+
+        mButtonsAdapter = new ButtonsAdapter();
+        mButtonsRecyclerView.setAdapter(mButtonsAdapter);
     }
 
     @Override
@@ -75,6 +99,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        //TODO
+
         switch (item.getItemId()) {
             default:
                 break;

@@ -37,13 +37,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
 
     @Override
     public void onBindViewHolder(@NonNull CategoryAdapter.CategoryViewHolder holder, int position) {
-        String title = categoryItemsList.get(position).getCategoryTitle();
-
-        if (title.equals("Rain")) {
-            holder.categoryTitle.setPadding(0, 150, 0, 0);
-        }
-
-        holder.categoryTitle.setText(title);
+        holder.categoryTitle.setText(categoryItemsList.get(position).getCategoryTitle());
         InitHorizontalRecycleView(holder.itemRecycler, categoryItemsList.get(position).getSoundItemList());
     }
 
