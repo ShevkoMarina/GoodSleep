@@ -29,10 +29,9 @@
         android:layout_width="match_parent"
         android:layout_height="35dp"/>
 
-    <androidx.recyclerview.widget.RecyclerView
+    <FrameLayout
         android:layout_marginTop="128dp"
+        android:id="@+id/cards_fragment_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/main_vertical_recycler_view"
-        android:background="@color/darkBlue"/>
+        android:layout_height="match_parent"/>
 </RelativeLayout>

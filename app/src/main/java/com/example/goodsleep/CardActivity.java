@@ -65,6 +65,7 @@ public class CardActivity extends AppCompatActivity {
         // Get info
         Intent intent = getIntent();
         SoundItem soundItem = intent.getParcelableExtra("Sound Item");
+        assert soundItem != null;
         tvSoundName.setText(soundItem.getName());
         mCardActivityBackground.setImageResource(soundItem.getImageSrc());
         mPlayer = MediaPlayer.create(this, soundItem.getSoundTracks()[0]);
@@ -103,7 +104,7 @@ public class CardActivity extends AppCompatActivity {
         mVolumeBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                mAudioManager.setStreamVolume(mAudioManager.STREAM_MUSIC, progress, 0);
+                mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, progress, 0);
             }
 
             @Override
@@ -114,23 +115,21 @@ public class CardActivity extends AppCompatActivity {
         });
     }
 
-
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         switch (keyCode) {
             case KeyEvent.KEYCODE_VOLUME_DOWN: {
-            mVolumeBar.setProgress(mAudioManager.getStreamVolume(mAudioManager.STREAM_MUSIC) - maxVolume/15);
+            mVolumeBar.setProgress(mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC) - maxVolume/15);
             break;
         }
             case KeyEvent.KEYCODE_VOLUME_UP: {
-            mVolumeBar.setProgress(mAudioManager.getStreamVolume(mAudioManager.STREAM_MUSIC) + maxVolume/15);
+            mVolumeBar.setProgress(mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC) + maxVolume/15);
             break;
         }
             case KeyEvent.KEYCODE_BACK: {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
             stopPlay();
-            CategoryAdapter.isItemClicked = false;
             break;
             }
         }

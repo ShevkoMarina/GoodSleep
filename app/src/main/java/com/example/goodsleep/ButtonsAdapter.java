@@ -12,60 +12,55 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class ButtonsAdapter extends RecyclerView.Adapter<ButtonsAdapter.TweetViewHolder> {
+public class ButtonsAdapter extends RecyclerView.Adapter<ButtonsAdapter.ButtonViewHolder> {
 
     private List<CategoryButton> mButtonsList = new ArrayList<>();
-    private SliderAdapter.OnItemClickListener mListener;
+    private CardsAdapter.OnItemClickListener mListener;
+    private static CardsFragment mFragment;
 
-    public static class TweetViewHolder extends RecyclerView.ViewHolder {
+    public ButtonsAdapter(CardsFragment fragment) {
+        mFragment = fragment;
+    }
+
+    public static class ButtonViewHolder extends RecyclerView.ViewHolder {
 
         private Button mCategoryButton;
 
-        public TweetViewHolder(@NonNull View itemView, final SliderAdapter.OnItemClickListener listener) {
+        public ButtonViewHolder(@NonNull View itemView) {
             super(itemView);
-
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (listener != null) {
-                        int position = getAdapterPosition();
-                        if (position != RecyclerView.NO_POSITION) {
-                            listener.onItemClick(position);
-                        }
-                    }
-                }
-            });
-
             mCategoryButton = itemView.findViewById(R.id.ctg_button);
         }
 
-        public void bind(CategoryButton categoryButton) {
+        public void bind(final CategoryButton categoryButton) {
             mCategoryButton.setText(categoryButton.getButtonText());
+
+            mCategoryButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mCategoryButton.setEnabled(false);
+                    mFragment.setCards(categoryButton.getButtonText());
+                }
+            });
         }
     }
 
     @NonNull
     @Override
-    public TweetViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new TweetViewHolder(
+    public ButtonViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new ButtonViewHolder(
                 LayoutInflater
                 .from(parent.getContext())
-                .inflate(R.layout.category_button, parent, false),
-                mListener);
+                .inflate(R.layout.category_button, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull TweetViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ButtonViewHolder holder, int position) {
         holder.bind(mButtonsList.get(position));
     }
 
     @Override
     public int getItemCount() {
         return mButtonsList.size();
-    }
-
-    public void setOnItemClickListener(SliderAdapter.OnItemClickListener listener) {
-        mListener = listener;
     }
 
     public void setItems(Collection<CategoryButton> categoryButtons) {

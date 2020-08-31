@@ -9,8 +9,9 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView2"
-        android:layout_width="120dp"
-        android:layout_height="150dp"
+        android:layout_width="match_parent"
+        android:layout_height="170dp"
+        android:layout_marginTop="10dp"
         android:layout_marginHorizontal="10dp"
         android:layout_marginBottom="22dp"
         android:background="@android:color/transparent"
@@ -27,7 +28,8 @@
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
             tools:layout_editor_absoluteX="9dp"
-            tools:layout_editor_absoluteY="6dp" />
+            tools:layout_editor_absoluteY="6dp"
+            android:contentDescription="@string/rainstorm"/>
     </androidx.cardview.widget.CardView>
 
     <TextView
