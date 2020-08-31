@@ -11,8 +11,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.WindowManager;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -23,7 +21,6 @@ public class MainActivity extends AppCompatActivity {
     public static final String CATEGORY_KEY = "CATEGORY_KEY";
     private MediaPlayer mPlayer1, mPlayer2;
     private List<CategoryButton> mCategoryButtons;
-    private LinearLayout mLinearLayout;
     private RecyclerView mButtonsRecyclerView;
     private ButtonsAdapter mButtonsAdapter;
     private FragmentManager mFragmentManager;
@@ -59,12 +56,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
          */
-
-        Bundle bundle = new Bundle();
-        bundle.putString(CATEGORY_KEY, "all");
-
         CardsFragment fragment = new CardsFragment();
-        fragment.setArguments(bundle);
 
         mFragmentManager = getSupportFragmentManager();
 
@@ -115,12 +107,11 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        //TODO
 
-        switch (item.getItemId()) {
-            default:
-                break;
-        }
+//        switch (item.getItemId()) {
+//            default:
+//                break;
+//        }
 
         return super.onOptionsItemSelected(item);
     }

@@ -21,6 +21,9 @@ public class CardsFragment extends Fragment {
     private RecyclerView mMainRecyclerView;
     private CardsAdapter mCardsAdapter;
 
+    public static final String ALL = "all";
+    public static final String RAIN = "rain";
+
     public static CardsFragment newInstance() {
         Bundle args = new Bundle();
         CardsFragment fragment = new CardsFragment();
@@ -38,20 +41,18 @@ public class CardsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_cards, container, false);
         initCardsRecyclerView(view);
-        assert getArguments() != null;
-        String category = getArguments().getString(MainActivity.CATEGORY_KEY);
-        assert category != null;
-        setCards(category);
+
+        setCards(ALL);
         return view;
     }
 
     public void setCards(String key) {
         switch (key) {
-            case "all":
+            case ALL:
                 createAllSoundItems();
                 setCardsAdapter(mAllItems, false);
                 break;
-            case "rain":
+            case RAIN:
                 createRainSoundItems();
                 setCardsAdapter(mRainItems, true);
                 break;

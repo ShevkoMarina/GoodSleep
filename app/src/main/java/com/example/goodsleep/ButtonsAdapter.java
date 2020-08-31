@@ -15,7 +15,6 @@ import java.util.List;
 public class ButtonsAdapter extends RecyclerView.Adapter<ButtonsAdapter.ButtonViewHolder> {
 
     private List<CategoryButton> mButtonsList = new ArrayList<>();
-    private CardsAdapter.OnItemClickListener mListener;
     private static CardsFragment mFragment;
 
     public ButtonsAdapter(CardsFragment fragment) {
@@ -25,6 +24,7 @@ public class ButtonsAdapter extends RecyclerView.Adapter<ButtonsAdapter.ButtonVi
     public static class ButtonViewHolder extends RecyclerView.ViewHolder {
 
         private Button mCategoryButton;
+        private static ArrayList<Button> mButtons = new ArrayList<>();
 
         public ButtonViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -33,14 +33,26 @@ public class ButtonsAdapter extends RecyclerView.Adapter<ButtonsAdapter.ButtonVi
 
         public void bind(final CategoryButton categoryButton) {
             mCategoryButton.setText(categoryButton.getButtonText());
+            mButtons.add(mCategoryButton);
+
+            if (categoryButton.getButtonText().equals("all")) {
+                mCategoryButton.setEnabled(false);
+            }
 
             mCategoryButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    enableAllButtons();
                     mCategoryButton.setEnabled(false);
                     mFragment.setCards(categoryButton.getButtonText());
                 }
             });
+        }
+
+        public void enableAllButtons() {
+            for (Button button : mButtons) {
+                button.setEnabled(true);
+            }
         }
     }
 
