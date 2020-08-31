@@ -1,9 +1,13 @@
 package com.example.goodsleep;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -18,12 +22,13 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final String CATEGORY_KEY = "CATEGORY_KEY";
+    private static final int NUM_PAGES = 5;
+    private ViewPager2 mViewPager;
+    private FragmentStateAdapter mFragmentStateAdapter;
     private MediaPlayer mPlayer1, mPlayer2;
-    private List<CategoryButton> mCategoryButtons;
+    private static List<CategoryButton> mCategoryButtons;
     private RecyclerView mButtonsRecyclerView;
-    private ButtonsAdapter mButtonsAdapter;
-    private FragmentManager mFragmentManager;
+    private static ButtonsAdapter mButtonsAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,21 +61,39 @@ public class MainActivity extends AppCompatActivity {
         });
 
          */
-        CardsFragment fragment = new CardsFragment();
+        mViewPager = findViewById(R.id.main_view_pager);
+        mFragmentStateAdapter = new ScreenSlidePagerAdapter(this);
+        mViewPager.setAdapter(mFragmentStateAdapter);
 
-        mFragmentManager = getSupportFragmentManager();
+        mViewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                mButtonsAdapter.disableButton(position);
+            }
+        });
 
-        if (savedInstanceState == null) {
-            mFragmentManager.beginTransaction()
-                    .replace(R.id.cards_fragment_container, fragment)
-                    .addToBackStack(CardsFragment.class.getName())
-                    .commit();
-        }
-
-        mButtonsAdapter = new ButtonsAdapter(fragment);
+        mButtonsAdapter = new ButtonsAdapter(mViewPager);
 
         initButtonsRecyclerView();
         setCategoryButtons();
+    }
+
+    private static class ScreenSlidePagerAdapter extends FragmentStateAdapter {
+        public ScreenSlidePagerAdapter(FragmentActivity fa) {
+            super(fa);
+        }
+
+        @NonNull
+        @Override
+        public Fragment createFragment(int position) {
+            return CardsFragment.newInstance(position);
+        }
+
+        @Override
+        public int getItemCount() {
+            return NUM_PAGES;
+        }
     }
 
     private void setCategoryButtons() {
@@ -95,6 +118,14 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        if (mViewPager.getCurrentItem() == 0) {
+            // If the user is currently looking at the first step, allow the system to handle the
+            // Back button. This calls finish() on this activity and pops the back stack.
+            super.onBackPressed();
+        } else {
+            // Otherwise, select the previous step.
+            mViewPager.setCurrentItem(mViewPager.getCurrentItem() - 1);
+        }
     }
 
     @Override

@@ -7,6 +7,7 @@ import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.ViewPager2;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -15,16 +16,16 @@ import java.util.List;
 public class ButtonsAdapter extends RecyclerView.Adapter<ButtonsAdapter.ButtonViewHolder> {
 
     private List<CategoryButton> mButtonsList = new ArrayList<>();
-    private static CardsFragment mFragment;
+    private static ViewPager2 mViewPager;
 
-    public ButtonsAdapter(CardsFragment fragment) {
-        mFragment = fragment;
+    public ButtonsAdapter(ViewPager2 viewPager) {
+        mViewPager = viewPager;
     }
 
     public static class ButtonViewHolder extends RecyclerView.ViewHolder {
 
         private Button mCategoryButton;
-        private static ArrayList<Button> mButtons = new ArrayList<>();
+        public static ArrayList<Button> mButtons = new ArrayList<>();
 
         public ButtonViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -35,23 +36,23 @@ public class ButtonsAdapter extends RecyclerView.Adapter<ButtonsAdapter.ButtonVi
             mCategoryButton.setText(categoryButton.getButtonText());
             mButtons.add(mCategoryButton);
 
-            if (categoryButton.getButtonText().equals("all")) {
-                mCategoryButton.setEnabled(false);
-            }
-
             mCategoryButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     enableAllButtons();
-                    mCategoryButton.setEnabled(false);
-                    mFragment.setCards(categoryButton.getButtonText());
+                    if (mCategoryButton.isEnabled()) {
+                        mCategoryButton.setEnabled(false);
+                    }
+                    mViewPager.setCurrentItem(getAdapterPosition());
                 }
             });
         }
 
         public void enableAllButtons() {
             for (Button button : mButtons) {
-                button.setEnabled(true);
+                if (!button.isEnabled()) {
+                    button.setEnabled(true);
+                }
             }
         }
     }
@@ -73,6 +74,10 @@ public class ButtonsAdapter extends RecyclerView.Adapter<ButtonsAdapter.ButtonVi
     @Override
     public int getItemCount() {
         return mButtonsList.size();
+    }
+
+    public void disableButton(int position) {
+        ButtonViewHolder.mButtons.get(position).performClick();
     }
 
     public void setItems(Collection<CategoryButton> categoryButtons) {

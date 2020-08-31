@@ -12,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class CardsFragment extends Fragment {
@@ -20,12 +22,15 @@ public class CardsFragment extends Fragment {
     private ArrayList<SoundItem> mAllItems;
     private RecyclerView mMainRecyclerView;
     private CardsAdapter mCardsAdapter;
+    private static int mPosition;
 
-    public static final String ALL = "all";
-    public static final String RAIN = "rain";
+    private static final int ALL = 0;
+    private static final int RAIN = 1;
+    private static final String POSITION = "POSITION";
 
-    public static CardsFragment newInstance() {
+    public static CardsFragment newInstance(int position) {
         Bundle args = new Bundle();
+        args.putInt(POSITION, position);
         CardsFragment fragment = new CardsFragment();
         fragment.setArguments(args);
         return fragment;
@@ -33,8 +38,13 @@ public class CardsFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        mCardsAdapter = new CardsAdapter();
         super.onCreate(savedInstanceState);
+
+        mCardsAdapter = new CardsAdapter();
+
+        if (getArguments() != null) {
+            mPosition = getArguments().getInt(POSITION);
+        }
     }
 
     @Override
@@ -42,12 +52,12 @@ public class CardsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_cards, container, false);
         initCardsRecyclerView(view);
 
-        setCards(ALL);
+        setCards(mPosition);
         return view;
     }
 
-    public void setCards(String key) {
-        switch (key) {
+    public void setCards(int position) {
+        switch (position) {
             case ALL:
                 createAllSoundItems();
                 setCardsAdapter(mAllItems, false);
@@ -60,10 +70,6 @@ public class CardsFragment extends Fragment {
     }
 
     private void setCardsAdapter(final ArrayList<SoundItem> list, boolean reset) {
-        if (reset) {
-            mCardsAdapter.clearItems();
-        }
-
         mCardsAdapter.setItems(list);
         mCardsAdapter.setOnItemClickListener(new CardsAdapter.OnItemClickListener() {
             @Override

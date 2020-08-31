@@ -58,7 +58,7 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.CardViewHold
     public CardsAdapter.CardViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new CardsAdapter.CardViewHolder(
                 LayoutInflater.from(parent.getContext()).inflate(
-                        R.layout.slide_item,
+                        R.layout.card_item,
                         parent,
                         false
                 ), mListener
@@ -77,11 +77,6 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.CardViewHold
 
     public void setItems(Collection<SoundItem> soundItems) {
         mSoundItems.addAll(soundItems);
-        notifyDataSetChanged();
-    }
-
-    public void clearItems() {
-        mSoundItems.clear();
         notifyDataSetChanged();
     }
 }
