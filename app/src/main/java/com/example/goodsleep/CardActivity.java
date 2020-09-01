@@ -19,8 +19,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -51,23 +49,18 @@ public class CardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_card);
 
-        getWindow().setFlags(
-                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
-        );
-
-        //mPauseButton = findViewById(R.id.pauseButton);
-        //mTimerButton = findViewById(R.id.timerButton);
-        // mAddButton = findViewById(R.id. addSoundtrackButton);
+        mPauseButton = findViewById(R.id.pauseButton);
+        mTimerButton = findViewById(R.id.timerButton);
+        mAddButton = findViewById(R.id.addSoundtrackButton);
         mVolumeBar = findViewById(R.id.volumeSeekBar);
         tvSoundName = findViewById(R.id.soundName);
         mCardActivityBackground = findViewById(R.id.card_activity_background);
         isMusicPlaying = true;
 
-      //  InitTimePicker();
+        InitTimePicker();
         InitVolumeBar();
-     //   InitPause();
-  //      InitAddButton();
+        InitPause();
+        InitAddButton();
 
         // Get info
         Intent intent = getIntent();
@@ -134,7 +127,10 @@ public class CardActivity extends AppCompatActivity {
             break;
         }
             case KeyEvent.KEYCODE_BACK: {
-            super.onBackPressed();
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+            stopPlay();
+            CategoryAdapter.isItemClicked = false;
             break;
             }
         }
@@ -191,9 +187,9 @@ public class CardActivity extends AppCompatActivity {
                 fragmentManager = getSupportFragmentManager();
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
                 AddSoundTracksFragment fragment = new AddSoundTracksFragment();
-               // FrameLayout fragmentContainer = view.findViewById(R.id.sound_fragment_container);
+                FrameLayout fragmentContainer = view.findViewById(R.id.sound_fragment_container);
                 //fragmentContainer.setVisibility(View.VISIBLE);
-              //  transaction.add(R.id.sound_fragment_container, fragment).commit();
+                transaction.add(R.id.sound_fragment_container, fragment).commit();
             }
         });
     }

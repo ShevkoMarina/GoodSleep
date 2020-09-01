@@ -7,55 +7,67 @@ import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.ViewPager2;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class ButtonsAdapter extends RecyclerView.Adapter<ButtonsAdapter.TweetViewHolder> {
+public class ButtonsAdapter extends RecyclerView.Adapter<ButtonsAdapter.ButtonViewHolder> {
 
     private List<CategoryButton> mButtonsList = new ArrayList<>();
-    private SliderAdapter.OnItemClickListener mListener;
+    private static ViewPager2 mViewPager;
 
-    public static class TweetViewHolder extends RecyclerView.ViewHolder {
+    public ButtonsAdapter(ViewPager2 viewPager) {
+        mViewPager = viewPager;
+    }
+
+    public static class ButtonViewHolder extends RecyclerView.ViewHolder {
 
         private Button mCategoryButton;
+        public static ArrayList<Button> mButtons = new ArrayList<>();
 
-        public TweetViewHolder(@NonNull View itemView, final SliderAdapter.OnItemClickListener listener) {
+        public ButtonViewHolder(@NonNull View itemView) {
             super(itemView);
-
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (listener != null) {
-                        int position = getAdapterPosition();
-                        if (position != RecyclerView.NO_POSITION) {
-                            listener.onItemClick(position);
-                        }
-                    }
-                }
-            });
-
             mCategoryButton = itemView.findViewById(R.id.ctg_button);
         }
 
-        public void bind(CategoryButton categoryButton) {
+        public void bind(final CategoryButton categoryButton) {
             mCategoryButton.setText(categoryButton.getButtonText());
+            mButtons.add(mCategoryButton);
+
+            mCategoryButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    enableAllButtons();
+                    if (mCategoryButton.isEnabled()) {
+                        mCategoryButton.setEnabled(false);
+                    }
+                    mViewPager.setCurrentItem(getAdapterPosition());
+                }
+            });
+        }
+
+        public void enableAllButtons() {
+            for (Button button : mButtons) {
+                if (!button.isEnabled()) {
+                    button.setEnabled(true);
+                }
+            }
         }
     }
 
     @NonNull
     @Override
-    public TweetViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new TweetViewHolder(
+    public ButtonViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new ButtonViewHolder(
                 LayoutInflater
                 .from(parent.getContext())
-                .inflate(R.layout.category_button, parent, false),
-                mListener);
+                .inflate(R.layout.category_button, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull TweetViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ButtonViewHolder holder, int position) {
         holder.bind(mButtonsList.get(position));
     }
 
@@ -64,8 +76,8 @@ public class ButtonsAdapter extends RecyclerView.Adapter<ButtonsAdapter.TweetVie
         return mButtonsList.size();
     }
 
-    public void setOnItemClickListener(SliderAdapter.OnItemClickListener listener) {
-        mListener = listener;
+    public void disableButton(int position) {
+        ButtonViewHolder.mButtons.get(position).performClick();
     }
 
     public void setItems(Collection<CategoryButton> categoryButtons) {

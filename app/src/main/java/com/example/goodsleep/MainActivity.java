@@ -1,40 +1,45 @@
 package com.example.goodsleep;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
+import android.view.WindowManager;
 import android.widget.Toast;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ImageButton mCardItem;
+    private static final int NUM_PAGES = 5;
+    private ViewPager2 mViewPager;
+    private FragmentStateAdapter mFragmentStateAdapter;
     private MediaPlayer mPlayer1, mPlayer2;
-    private List<SoundItem> SoundItems;
-    private List<CategoryItem> CategoryItems;
-    private List<CategoryButton> mCategoryButtons;
-    private LinearLayout mLinearLayout;
-    private RecyclerView mHorizontalRecyclerView, mVerticalRecyclerView, mButtonsRecyclerView;
-    private SliderAdapter mAdapter;
-    private CategoryAdapter categoryAdapter;
-    private ButtonsAdapter mButtonsAdapter;
+    private static List<CategoryButton> mCategoryButtons;
+    private RecyclerView mButtonsRecyclerView;
+    private static ButtonsAdapter mButtonsAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        getWindow().setFlags(
+                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+        );
 
         /*
         mPlayer1 = MediaPlayer.create(this, R.raw.kukushka);
@@ -56,11 +61,39 @@ public class MainActivity extends AppCompatActivity {
         });
 
          */
+        mViewPager = findViewById(R.id.main_view_pager);
+        mFragmentStateAdapter = new ScreenSlidePagerAdapter(this);
+        mViewPager.setAdapter(mFragmentStateAdapter);
 
-        createCategoryItems();
-        IniVerticalRecyclerView();
+        mViewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                mButtonsAdapter.disableButton(position);
+            }
+        });
+
+        mButtonsAdapter = new ButtonsAdapter(mViewPager);
+
         initButtonsRecyclerView();
         setCategoryButtons();
+    }
+
+    private static class ScreenSlidePagerAdapter extends FragmentStateAdapter {
+        public ScreenSlidePagerAdapter(FragmentActivity fa) {
+            super(fa);
+        }
+
+        @NonNull
+        @Override
+        public Fragment createFragment(int position) {
+            return CardsFragment.newInstance(position);
+        }
+
+        @Override
+        public int getItemCount() {
+            return NUM_PAGES;
+        }
     }
 
     private void setCategoryButtons() {
@@ -70,23 +103,29 @@ public class MainActivity extends AppCompatActivity {
 
     private void createCategoryButtons() {
         mCategoryButtons = new ArrayList<>();
-        mCategoryButtons.add(new CategoryButton("All"));
-        mCategoryButtons.add(new CategoryButton("Rain"));
-        mCategoryButtons.add(new CategoryButton("Nature"));
-        mCategoryButtons.add(new CategoryButton("Sea"));
-        mCategoryButtons.add(new CategoryButton("Night"));
+        mCategoryButtons.add(new CategoryButton("all"));
+        mCategoryButtons.add(new CategoryButton("rain"));
+        mCategoryButtons.add(new CategoryButton("nature"));
+        mCategoryButtons.add(new CategoryButton("sea"));
+        mCategoryButtons.add(new CategoryButton("night"));
     }
 
     private void initButtonsRecyclerView() {
         mButtonsRecyclerView = findViewById(R.id.buttons_recycler_view);
         mButtonsRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-
-        mButtonsAdapter = new ButtonsAdapter();
         mButtonsRecyclerView.setAdapter(mButtonsAdapter);
     }
 
     @Override
     public void onBackPressed() {
+        if (mViewPager.getCurrentItem() == 0) {
+            // If the user is currently looking at the first step, allow the system to handle the
+            // Back button. This calls finish() on this activity and pops the back stack.
+            super.onBackPressed();
+        } else {
+            // Otherwise, select the previous step.
+            mViewPager.setCurrentItem(mViewPager.getCurrentItem() - 1);
+        }
     }
 
     @Override
@@ -99,41 +138,13 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        //TODO
 
-        switch (item.getItemId()) {
-            default:
-                break;
-        }
+//        switch (item.getItemId()) {
+//            default:
+//                break;
+//        }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    private void createCategoryItems() {
-        CategoryItems = new ArrayList<>();
-        CategoryItems.add(new CategoryItem("Rain", createRainSoundItems()));
-        CategoryItems.add(new CategoryItem("Nature", createRainSoundItems()));
-        CategoryItems.add(new CategoryItem("Sea", createRainSoundItems()));
-        CategoryItems.add(new CategoryItem("Night", createRainSoundItems()));
-    }
-
-    private List<SoundItem> createRainSoundItems() {
-        List<SoundItem> RainItems = new ArrayList<>();
-        RainItems.add(new SoundItem(R.drawable.rain_on_window, "Rain on window", new int[] {R.raw.rain_on_window}));
-        RainItems.add(new SoundItem(R.drawable.thunder, "Thunderstorm", new int[] {R.raw.thunderstorm}));
-        RainItems.add(new SoundItem(R.drawable.light_rain, "Light rain", new int[] {R.raw.light_rain}));
-        RainItems.add(new SoundItem(R.drawable.heavy_rain, "Heavy rain", new int[] {R.raw.heavy_rain}));
-        RainItems.add(new SoundItem(R.drawable.steady_rain, "Steady rain", new int[] {R.raw.steady_rain}));
-        RainItems.add(new SoundItem(R.drawable.rain_on_umbrella, "Rain on umbrella", new int[] {R.raw.rain_falls_on_umbrella}));
-        return RainItems;
-    }
-
-    private void IniVerticalRecyclerView() {
-        mVerticalRecyclerView = findViewById(R.id.main_vertical_recycler_view);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        mVerticalRecyclerView.setLayoutManager(layoutManager);
-        categoryAdapter = new CategoryAdapter(this, CategoryItems);
-        mVerticalRecyclerView.setAdapter(categoryAdapter);
     }
 
     private void stopPlay1() {
