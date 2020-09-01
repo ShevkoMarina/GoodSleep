@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/card_activity_container"
     android:layout_width="match_parent"
-    android:background="@android:color/black"
     android:layout_height="match_parent"
+    android:background="@android:color/black"
     tools:context=".CardActivity">
 
     <ImageView
@@ -15,96 +15,145 @@
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="ContentDescription"
-        android:adjustViewBounds="true"
-        android:scaleType="centerCrop"/>
-
-    <LinearLayout
-        android:id="@+id/buttonPanel"
-        android:layout_width="0dp"
-        android:layout_height="125dp"
-        android:gravity="center"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <ImageButton
-            android:id="@+id/timerButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@android:color/transparent"
-            android:src="@drawable/timer_icon" />
-
-        <ImageButton
-            android:id="@+id/pauseButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@android:color/transparent"
-            android:src="@drawable/pause_icon" />
-
-        <ImageButton
-            android:id="@+id/addSoundtrackButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@android:color/transparent"
-            android:src="@drawable/add_icon" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="379dp"
-        android:layout_height="44dp"
-        android:layout_marginTop="532dp"
-        android:gravity="center"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/buttonPanel"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.571"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0">
-
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="33dp"
-            android:layout_height="54dp"
-            android:layout_weight="1"
-            android:src="@drawable/volume_icon" />
-
-        <SeekBar
-            android:id="@+id/volumeSeekBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="5" />
-    </LinearLayout>
+        tools:layout_editor_absoluteX="16dp" />
 
     <TextView
         android:id="@+id/soundName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=""
         android:fontFamily="sans-serif-light"
+        android:text=""
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.121" />
+        app:layout_constraintVertical_bias="0.04000002" />
 
-    <FrameLayout
-        android:id="@+id/sound_fragment_container"
-        android:layout_width="300dp"
-        android:layout_height="500dp"
-        app:layout_constraintBottom_toBottomOf="@+id/card_activity_background"
-        app:layout_constraintEnd_toEndOf="@+id/card_activity_background"
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="41dp"
+        android:layout_height="38dp"
+        android:layout_weight="1"
+        android:src="@drawable/volume_icon"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/volumeSeekBar"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.957" />
 
-    </FrameLayout>
+    <SeekBar
+        android:id="@+id/volumeSeekBar"
+        android:layout_width="299dp"
+        android:layout_height="37dp"
+        android:layout_weight="5"
+        app:layout_constraintBottom_toBottomOf="@+id/card_activity_background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.696"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/card_activity_background"
+        app:layout_constraintVertical_bias="0.955" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:foregroundGravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.110000014">
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="260dp"
+            android:layout_height="260dp"
+            android:indeterminateDrawable="@drawable/timer_animation"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <ProgressBar
+            android:id="@+id/progressBar3"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="230dp"
+            android:layout_height="230dp"
+            android:layout_weight="1"
+            android:indeterminateDrawable="@drawable/timer_animation"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/progressBar"
+            app:layout_constraintTop_toTopOf="@+id/progressBar" />
+
+        <ProgressBar
+            android:id="@+id/progressBar2"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:indeterminateDrawable="@drawable/timer_animation"
+            app:layout_constraintBottom_toBottomOf="@+id/progressBar3"
+            app:layout_constraintEnd_toEndOf="@+id/progressBar3"
+            app:layout_constraintStart_toStartOf="@+id/progressBar3"
+            app:layout_constraintTop_toTopOf="@+id/progressBar3" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:layout_width="330dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="@+id/card_activity_background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+        app:layout_constraintVertical_bias="0.679">
+
+        <LinearLayout
+            android:layout_margin="20dp"
+            android:id="@+id/pauseButton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/button_background_trans"
+            android:gravity="center">
+
+            <ImageButton
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:background="@android:color/transparent"
+                android:cropToPadding="true"
+                android:scaleType="fitCenter"
+                android:src="@drawable/pause_icon" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_margin="20dp"
+            android:id="@+id/addSoundtrackButton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/button_background_trans"
+            android:gravity="center">
+
+            <ImageButton
+
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@android:color/transparent"
+                android:cropToPadding="true"
+                android:scaleType="fitCenter"
+                android:src="@drawable/add_icon" />
+        </LinearLayout>
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
