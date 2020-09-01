@@ -105,8 +105,8 @@ public class MainActivity extends AppCompatActivity {
         mCategoryButtons = new ArrayList<>();
         mCategoryButtons.add(new CategoryButton("all"));
         mCategoryButtons.add(new CategoryButton("rain"));
-        mCategoryButtons.add(new CategoryButton("nature"));
         mCategoryButtons.add(new CategoryButton("sea"));
+        mCategoryButtons.add(new CategoryButton("nature"));
         mCategoryButtons.add(new CategoryButton("night"));
     }
 
