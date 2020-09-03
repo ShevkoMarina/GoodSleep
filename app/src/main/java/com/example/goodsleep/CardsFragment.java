@@ -12,14 +12,17 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Random;
 
 public class CardsFragment extends Fragment {
 
     private ArrayList<SoundItem> mRainItems;
     private ArrayList<SoundItem> mSeaItems;
+    private ArrayList<SoundItem> mNightItems;
     private ArrayList<SoundItem> mAllItems;
     private RecyclerView mMainRecyclerView;
     private CardsAdapter mCardsAdapter;
@@ -28,6 +31,7 @@ public class CardsFragment extends Fragment {
     private static final int ALL = 0;
     private static final int RAIN = 1;
     private static final int SEA = 2;
+    private static final int NIGHT = 3;
     private static final String POSITION = "POSITION";
 
     public static CardsFragment newInstance(int position) {
@@ -54,6 +58,11 @@ public class CardsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_cards, container, false);
         initCardsRecyclerView(view);
 
+        createRainSoundItems();
+        createSeaSoundItems();
+        createNightSoundItems();
+        createAllSoundItems();
+
         setCards(mPosition);
         return view;
     }
@@ -61,21 +70,21 @@ public class CardsFragment extends Fragment {
     public void setCards(int position) {
         switch (position) {
             case ALL:
-                createAllSoundItems();
-                setCardsAdapter(mAllItems, false);
+                setCardsAdapter(mAllItems);
                 break;
             case RAIN:
-                createRainSoundItems();
-                setCardsAdapter(mRainItems, true);
+                setCardsAdapter(mRainItems);
                 break;
             case SEA:
-                createSeaSoundItems();
-                setCardsAdapter(mSeaItems, true);
+                setCardsAdapter(mSeaItems);
+                break;
+            case NIGHT:
+                setCardsAdapter(mNightItems);
                 break;
         }
     }
 
-    private void setCardsAdapter(final ArrayList<SoundItem> list, boolean reset) {
+    private void setCardsAdapter(final ArrayList<SoundItem> list) {
         mCardsAdapter.setItems(list);
         mCardsAdapter.setOnItemClickListener(new CardsAdapter.OnItemClickListener() {
             @Override
@@ -96,18 +105,11 @@ public class CardsFragment extends Fragment {
 
     private void createAllSoundItems() {
         mAllItems = new ArrayList<>();
-        mAllItems.add(new SoundItem(R.drawable.rain_on_window, "Rain on Window", new int[] { R.raw.rain_on_window }));
-        mAllItems.add(new SoundItem(R.drawable.seascape, "Seascape", new int[] { R.raw.seascape }));
-        mAllItems.add(new SoundItem(R.drawable.thunder, "Thunderstorm", new int[] { R.raw.thunderstorm }));
-        mAllItems.add(new SoundItem(R.drawable.sea_cave, "Sea Cave", new int[] { R.raw.sea_cave }));
-        mAllItems.add(new SoundItem(R.drawable.light_rain, "Light Rain", new int[] { R.raw.light_rain }));
-        mAllItems.add(new SoundItem(R.drawable.waves, "Big Waves", new int[] { R.raw.big_waves }));
-        mAllItems.add(new SoundItem(R.drawable.heavy_rain, "Heavy Rain", new int[] { R.raw.heavy_rain }));
-        mAllItems.add(new SoundItem(R.drawable.sea_beach, "North Sea Island", new int[] { R.raw.north_sea_island }));
-        mAllItems.add(new SoundItem(R.drawable.steady_rain, "Steady Rain", new int[] { R.raw.steady_rain }));
-        mAllItems.add(new SoundItem(R.drawable.ocean, "Ocean", new int[] { R.raw.ocean }));
-        mAllItems.add(new SoundItem(R.drawable.rain_on_umbrella, "Rain on Umbrella", new int[] { R.raw.rain_falls_on_umbrella }));
-        mAllItems.add(new SoundItem(R.drawable.sea_wind, "Sea Wind", new int[] { R.raw.sea_wind }));
+        for (int i = 0; i < mRainItems.size(); i++) {
+            mAllItems.add(mRainItems.get(i));
+            mAllItems.add(mSeaItems.get(i));
+            mAllItems.add(mNightItems.get((i < 2) ? i : 0));
+        }
     }
 
     private void createRainSoundItems() {
@@ -128,5 +130,11 @@ public class CardsFragment extends Fragment {
         mSeaItems.add(new SoundItem(R.drawable.sea_beach, "North Sea Island", new int[] { R.raw.north_sea_island }));
         mSeaItems.add(new SoundItem(R.drawable.ocean, "Ocean", new int[] { R.raw.ocean }));
         mSeaItems.add(new SoundItem(R.drawable.sea_wind, "Sea Wind", new int[] { R.raw.sea_wind }));
+    }
+
+    private void createNightSoundItems() {
+        mNightItems = new ArrayList<>();
+        mNightItems.add(new SoundItem(R.drawable.windy_night, "Windy Night", new int[] { R.raw.windy_night }));
+        mNightItems.add(new SoundItem(R.drawable.night_wildlife, "Night Wildlife", new int[] { R.raw.night_wildlife }));
     }
 }
