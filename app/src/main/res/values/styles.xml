@@ -20,4 +20,10 @@
         <item name="android:textColor">@android:color/white</item>
         <item name="android:itemBackground">@drawable/menu_dropdown_panel</item>
     </style>
+
+
+    <style name="transparent" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowTranslucentStatus">false</item> <item name="android:windowDrawsSystemBarBackgrounds">false</item>
+    </style>
+
 </resources>

@@ -6,6 +6,7 @@
     android:id="@+id/card_activity_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    style="@style/transparent"
     android:background="@android:color/black"
     tools:context=".CardActivity">
 
@@ -18,9 +19,11 @@
         android:layout_centerHorizontal="true"
         android:adjustViewBounds="true"
         android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="ContentDescription"
-        tools:layout_editor_absoluteX="0dp" />
+        tools:ignore="ContentDescription" />
 
     <TextView
         android:id="@+id/soundName"
@@ -114,6 +117,18 @@
             app:layout_constraintStart_toStartOf="@+id/progressBar"
             app:layout_constraintTop_toTopOf="@+id/progressBar" />
 
+        <TextView
+            android:textAlignment="center"
+            android:id="@+id/timer_tv"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="Timer"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/progressBar4"
+            app:layout_constraintEnd_toEndOf="@+id/progressBar4"
+            app:layout_constraintStart_toStartOf="@+id/progressBar4"
+            app:layout_constraintTop_toTopOf="@+id/progressBar4" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -131,13 +146,13 @@
 
         <LinearLayout
             android:layout_margin="20dp"
-            android:id="@+id/pauseButton"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@drawable/button_background_trans"
             android:gravity="center">
 
             <ImageButton
+                android:id="@+id/pauseButton"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:background="@android:color/transparent"
@@ -148,14 +163,13 @@
 
         <LinearLayout
             android:layout_margin="20dp"
-            android:id="@+id/addSoundtrackButton"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@drawable/button_background_trans"
             android:gravity="center">
 
             <ImageButton
-
+                android:id="@+id/addSoundtrackButton"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:background="@android:color/transparent"
@@ -164,5 +178,16 @@
                 android:src="@drawable/add_icon" />
         </LinearLayout>
     </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/timer_fragment_container"
+        android:layout_width="350dp"
+        android:layout_height="450dp"
+        app:layout_constraintBottom_toBottomOf="@+id/card_activity_background"
+        app:layout_constraintEnd_toEndOf="@+id/card_activity_background"
+        app:layout_constraintStart_toStartOf="@+id/card_activity_background"
+        app:layout_constraintTop_toTopOf="@+id/card_activity_background">
+
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

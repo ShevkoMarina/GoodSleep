@@ -14,8 +14,10 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -27,10 +29,10 @@ import java.util.Date;
 
 public class CardActivity extends AppCompatActivity {
 
-    ImageButton mPauseButton, mTimerButton, mAddButton;
+    ImageButton mPauseButton, mAddButton;
     SeekBar mVolumeBar;
     int tHours, tMinute;
-    TextView mTVTimer, tvSoundName;
+    TextView tvTimer, tvSoundName;
     MediaPlayer mPlayer;
     AudioManager mAudioManager;
     ImageView mCardActivityBackground;
@@ -48,18 +50,20 @@ public class CardActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
         );
 
-        //mPauseButton = findViewById(R.id.pauseButton);
-        //mTimerButton = findViewById(R.id.timerButton);
-        // mAddButton = findViewById(R.id. addSoundtrackButton);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION, WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+
+        mPauseButton = findViewById(R.id.pauseButton);
+        tvTimer = findViewById(R.id.timer_tv);
+        mAddButton = findViewById(R.id. addSoundtrackButton);
         mVolumeBar = findViewById(R.id.volumeSeekBar);
         tvSoundName = findViewById(R.id.soundName);
         mCardActivityBackground = findViewById(R.id.card_activity_background);
         isMusicPlaying = true;
 
-        //  InitTimePicker();
+        InitTimePicker();
         InitVolumeBar();
-        //   InitPause();
-        //      InitAddButton();
+        InitPause();
+        InitAddButton();
 
         // Get info
         Intent intent = getIntent();
@@ -147,12 +151,13 @@ public class CardActivity extends AppCompatActivity {
 
 
     private void InitTimePicker() {
-        mTimerButton.setOnClickListener(new View.OnClickListener() {
+        /*
+        tvTimer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 TimePickerDialog timePickerDialog = new TimePickerDialog(
                         CardActivity.this,
-                        android.R.style.Theme_Holo_Dialog_MinWidth,
+                        android.R.style.Theme_Holo_Dialog_NoActionBar_MinWidth,
                         new TimePickerDialog.OnTimeSetListener() {
                             @Override
                             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
@@ -163,7 +168,7 @@ public class CardActivity extends AppCompatActivity {
                                 try {
                                     Date date = f24Hours.parse(time);
                                     SimpleDateFormat f12Hours = new SimpleDateFormat("hh:mm aa");
-                                    mTVTimer.setText(f12Hours.format(date));
+                                    tvTimer.setText(f12Hours.format(date));
                                 } catch (ParseException e) {
                                     e.printStackTrace();
                                 }
@@ -175,7 +180,20 @@ public class CardActivity extends AppCompatActivity {
                 timePickerDialog.show();
             }
         });
+         */
+
+        tvTimer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fragmentManager = getSupportFragmentManager();
+                FragmentTransaction transaction = fragmentManager.beginTransaction();
+                TimerFragment fragment = new TimerFragment();
+                FrameLayout container = view.findViewById(R.id.timer_fragment_container);
+                transaction.add(R.id.timer_fragment_container, fragment).commit();
+            }
+        });
     }
+
 
     private void InitAddButton() {
         mAddButton.setOnClickListener(new View.OnClickListener() {

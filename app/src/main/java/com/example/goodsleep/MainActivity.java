@@ -41,6 +41,9 @@ public class MainActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
         );
 
+
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION, WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+
         /*
         mPlayer1 = MediaPlayer.create(this, R.raw.kukushka);
         mPlayer2 = MediaPlayer.create(this, R.raw.pribojj);
