@@ -64,6 +64,7 @@ public class CardActivity extends AppCompatActivity {
         InitVolumeBar();
         InitPause();
         InitAddButton();
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
         // Get info
         Intent intent = getIntent();
@@ -130,12 +131,22 @@ public class CardActivity extends AppCompatActivity {
                 break;
             }
             case KeyEvent.KEYCODE_BACK: {
-                super.onBackPressed();
-                mPlayer.stop();
+                GoBack();
                 break;
             }
         }
         return true;
+    }
+
+
+    public void GoBack() {
+        int count = getSupportFragmentManager().getBackStackEntryCount();
+        if (count == 0) {
+            super.onBackPressed();
+        } else {
+            getSupportFragmentManager().popBackStack();
+        }
+        mPlayer.stop();
     }
 
     private void stopPlay() {
@@ -190,6 +201,7 @@ public class CardActivity extends AppCompatActivity {
                 TimerFragment fragment = new TimerFragment();
                 FrameLayout container = view.findViewById(R.id.timer_fragment_container);
                 transaction.add(R.id.timer_fragment_container, fragment).commit();
+                transaction.addToBackStack(null);
             }
         });
     }

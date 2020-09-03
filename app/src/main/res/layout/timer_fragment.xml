@@ -5,88 +5,89 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_gravity="center"
     android:background="@drawable/background_fragments">
 
-    <HorizontalScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical"
         android:padding="30dp"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="vertical" >
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-light"
+            android:text="Choose duration"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textSize="20sp" />
 
-            <TextView
-                android:textAlignment="center"
-                android:textSize="20sp"
-                android:fontFamily="sans-serif-light"
-                android:id="@+id/textView"
-                android:textAllCaps="true"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Choose duration" />
+        <Button
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/timer_fragment_buttons"
+            android:fontFamily="sans-serif-light"
+            android:text="15 min"
+            android:textAllCaps="false"
+            android:textSize="14sp" />
 
-            <Button
-                android:layout_margin="10dp"
-                android:layout_width="200dp"
-                android:layout_height="40dp"
-                android:textSize="14sp"
-                android:textAllCaps="false"
-                android:fontFamily="sans-serif-light"
-                android:background="@drawable/timer_fragment_buttons"
-                android:text="15 min"/>
-            <Button
-                android:layout_margin="10dp"
-                android:layout_width="200dp"
-                android:layout_height="40dp"
-                android:textSize="14sp"
-                android:textAllCaps="false"
-                android:fontFamily="sans-serif-light"
-                android:background="@drawable/timer_fragment_buttons"
-                android:text="30 min"/>
-            <Button
-                android:layout_margin="10dp"
-                android:layout_width="200dp"
-                android:textSize="14sp"
-                android:fontFamily="sans-serif-light"
-                android:layout_height="40dp"
-                android:textAllCaps="false"
-                android:background="@drawable/timer_fragment_buttons"
-                android:text="1 hour"/>
+        <Button
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/timer_fragment_buttons"
+            android:fontFamily="sans-serif-light"
+            android:text="30 min"
+            android:textAllCaps="false"
+            android:textSize="14sp" />
 
-            <Button
-                android:id="@+id/custom_timer_button"
-                android:layout_margin="10dp"
-                android:textSize="14sp"
-                android:fontFamily="sans-serif-light"
-                android:textAllCaps="false"
-                android:layout_width="200dp"
-                android:layout_height="40dp"
-                android:background="@drawable/timer_fragment_buttons"
-                android:text="Custom settings"/>
-            <Button
-                android:id="@+id/off_timer_button"
-                android:layout_margin="10dp"
-                android:textSize="14sp"
-                android:fontFamily="sans-serif-light"
-                android:textAllCaps="false"
-                android:layout_width="200dp"
-                android:layout_height="40dp"
-                android:background="@drawable/timer_fragment_buttons"
-                android:text="Turn off"/>
+        <Button
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/timer_fragment_buttons"
+            android:fontFamily="sans-serif-light"
+            android:text="1 hour"
+            android:textAllCaps="false"
+            android:textSize="14sp" />
 
-            <ImageButton
-                android:id="@+id/cancel_button"
-                android:layout_marginTop="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:src="@drawable/cancel_icon" />
-        </LinearLayout>
-    </HorizontalScrollView>
+        <Button
+            android:id="@+id/custom_timer_button"
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/timer_fragment_buttons"
+            android:fontFamily="sans-serif-light"
+            android:text="Custom settings"
+            android:textAllCaps="false"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/off_timer_button"
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/timer_fragment_buttons"
+            android:fontFamily="sans-serif-light"
+            android:text="Turn off"
+            android:textAllCaps="false"
+            android:textSize="14sp" />
+
+        <ImageButton
+            android:id="@+id/cancel_button"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/button_background_trans"
+            android:src="@drawable/cancel_icon" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
