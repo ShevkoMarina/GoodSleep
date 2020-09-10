@@ -6,9 +6,13 @@ import android.os.Parcelable;
 public class SoundItem implements Parcelable {
 
     private int imageSrc;
+    private int imageSrcLow;
     private String name;
     private int[] SoundTracks;
 
+    public int getImageSrcLow() {
+        return imageSrcLow;
+    }
     public int getImageSrc() {
         return imageSrc;
     }
@@ -43,8 +47,9 @@ public class SoundItem implements Parcelable {
         dest.writeIntArray(SoundTracks);
     }
 
-    public SoundItem(int imageSrc, String name, int[] soundTracks) {
+    public SoundItem(int imageSrcLow, int imageSrc, String name, int[] soundTracks) {
         this.imageSrc = imageSrc;
+        this.imageSrcLow = imageSrcLow;
         this.name = name;
         SoundTracks = soundTracks;
     }

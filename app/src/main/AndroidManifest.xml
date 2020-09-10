@@ -11,7 +11,7 @@
         android:theme="@style/AppTheme.ActionBar.Transparent">
         <activity
             android:name=".CardActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait"

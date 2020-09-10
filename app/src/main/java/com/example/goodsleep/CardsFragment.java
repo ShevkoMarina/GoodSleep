@@ -99,6 +99,10 @@ public class CardsFragment extends Fragment {
 
     private void initCardsRecyclerView(View view) {
         mMainRecyclerView = view.findViewById(R.id.main_recycler_view);
+        mMainRecyclerView.setHasFixedSize(true);
+        mMainRecyclerView.setItemViewCacheSize(18);
+        mMainRecyclerView.setDrawingCacheEnabled(true);
+        mMainRecyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_LOW);
         mMainRecyclerView.setLayoutManager(new GridLayoutManager(view.getContext(), 2));
         mMainRecyclerView.setAdapter(mCardsAdapter);
     }
@@ -114,27 +118,27 @@ public class CardsFragment extends Fragment {
 
     private void createRainSoundItems() {
         mRainItems = new ArrayList<>();
-        mRainItems.add(new SoundItem(R.drawable.rain_on_window, "Rain on Window", new int[] { R.raw.rain_on_window }));
-        mRainItems.add(new SoundItem(R.drawable.thunder, "Thunderstorm", new int[] { R.raw.thunderstorm }));
-        mRainItems.add(new SoundItem(R.drawable.light_rain, "Light Rain", new int[] { R.raw.light_rain }));
-        mRainItems.add(new SoundItem(R.drawable.heavy_rain, "Heavy Rain", new int[] { R.raw.heavy_rain }));
-        mRainItems.add(new SoundItem(R.drawable.steady_rain, "Steady Rain", new int[] { R.raw.steady_rain }));
-        mRainItems.add(new SoundItem(R.drawable.rain_on_umbrella, "Rain on Umbrella", new int[] {R.raw.rain_falls_on_umbrella}));
+        mRainItems.add(new SoundItem(R.drawable.rain_on_window_low, R.drawable.rain_on_window, "Rain on Window", new int[] { R.raw.rain_on_window }));
+        mRainItems.add(new SoundItem(R.drawable.thunderstorm_low, R.drawable.thunder, "Thunderstorm", new int[] { R.raw.thunderstorm }));
+        mRainItems.add(new SoundItem(R.drawable.light_rain_low, R.drawable.light_rain, "Light Rain", new int[] { R.raw.light_rain }));
+        mRainItems.add(new SoundItem(R.drawable.heavy_rain_low, R.drawable.heavy_rain, "Heavy Rain", new int[] { R.raw.heavy_rain }));
+        mRainItems.add(new SoundItem(R.drawable.steady_rain_low, R.drawable.steady_rain, "Steady Rain", new int[] { R.raw.steady_rain }));
+        mRainItems.add(new SoundItem(R.drawable.rain_on_umbrella_low, R.drawable.rain_on_umbrella, "Rain on Umbrella", new int[] {R.raw.rain_falls_on_umbrella}));
     }
 
     private void createSeaSoundItems() {
         mSeaItems = new ArrayList<>();
-        mSeaItems.add(new SoundItem(R.drawable.seascape, "Seascape", new int[] { R.raw.seascape }));
-        mSeaItems.add(new SoundItem(R.drawable.sea_cave, "Sea Cave", new int[] { R.raw.sea_cave }));
-        mSeaItems.add(new SoundItem(R.drawable.waves, "Big Waves", new int[] { R.raw.big_waves }));
-        mSeaItems.add(new SoundItem(R.drawable.sea_beach, "North Sea Island", new int[] { R.raw.north_sea_island }));
-        mSeaItems.add(new SoundItem(R.drawable.ocean, "Ocean", new int[] { R.raw.ocean }));
-        mSeaItems.add(new SoundItem(R.drawable.sea_wind, "Sea Wind", new int[] { R.raw.sea_wind }));
+        mSeaItems.add(new SoundItem(R.drawable.seascape_low, R.drawable.seascape, "Seascape", new int[] { R.raw.seascape }));
+        mSeaItems.add(new SoundItem(R.drawable.sea_cave_low, R.drawable.sea_cave, "Sea Cave", new int[] { R.raw.sea_cave }));
+        mSeaItems.add(new SoundItem(R.drawable.big_waves_low, R.drawable.waves, "Big Waves", new int[] { R.raw.big_waves }));
+        mSeaItems.add(new SoundItem(R.drawable.sea_beach_low, R.drawable.sea_beach, "North Sea Island", new int[] { R.raw.north_sea_island }));
+        mSeaItems.add(new SoundItem(R.drawable.ocean_low, R.drawable.ocean, "Ocean", new int[] { R.raw.ocean }));
+        mSeaItems.add(new SoundItem(R.drawable.sea_wind_low, R.drawable.sea_wind, "Sea Wind", new int[] { R.raw.sea_wind }));
     }
 
     private void createNightSoundItems() {
         mNightItems = new ArrayList<>();
-        mNightItems.add(new SoundItem(R.drawable.windy_night, "Windy Night", new int[] { R.raw.windy_night }));
-        mNightItems.add(new SoundItem(R.drawable.night_wildlife, "Night Wildlife", new int[] { R.raw.night_wildlife }));
+        mNightItems.add(new SoundItem(R.drawable.windy_night_low, R.drawable.windy_night, "Windy Night", new int[] { R.raw.windy_night }));
+        mNightItems.add(new SoundItem(R.drawable.night_wildlife_low, R.drawable.night_wildlife, "Night Wildlife", new int[] { R.raw.night_wildlife }));
     }
 }

@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.WindowManager;
 
 import java.util.ArrayList;
@@ -90,6 +91,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void initButtonsRecyclerView() {
         mButtonsRecyclerView = findViewById(R.id.buttons_recycler_view);
+        mButtonsRecyclerView.setHasFixedSize(true);
+        mButtonsRecyclerView.setItemViewCacheSize(5);
+        mButtonsRecyclerView.setDrawingCacheEnabled(true);
+        mButtonsRecyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
         mButtonsRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         mButtonsRecyclerView.setAdapter(mButtonsAdapter);
     }
