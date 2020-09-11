@@ -48,6 +48,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
+                if (position == NUM_PAGES - 2) {
+                    mButtonsRecyclerView.scrollToPosition(NUM_PAGES - 1);
+                } else {
+                    mButtonsRecyclerView.scrollToPosition(position);
+                }
                 mButtonsAdapter.disableButton(position);
             }
         });
@@ -93,8 +98,6 @@ public class MainActivity extends AppCompatActivity {
         mButtonsRecyclerView = findViewById(R.id.buttons_recycler_view);
         mButtonsRecyclerView.setHasFixedSize(true);
         mButtonsRecyclerView.setItemViewCacheSize(5);
-        mButtonsRecyclerView.setDrawingCacheEnabled(true);
-        mButtonsRecyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
         mButtonsRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         mButtonsRecyclerView.setAdapter(mButtonsAdapter);
     }

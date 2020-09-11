@@ -30,6 +30,7 @@ public class ButtonsAdapter extends RecyclerView.Adapter<ButtonsAdapter.ButtonVi
         public ButtonViewHolder(@NonNull View itemView) {
             super(itemView);
             mCategoryButton = itemView.findViewById(R.id.ctg_button);
+            mButtons.add(mCategoryButton);
 
             mCategoryButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -45,7 +46,6 @@ public class ButtonsAdapter extends RecyclerView.Adapter<ButtonsAdapter.ButtonVi
 
         public void bind(final CategoryButton categoryButton) {
             mCategoryButton.setText(categoryButton.getButtonText());
-            mButtons.add(mCategoryButton);
         }
 
         public void enableAllButtons() {
