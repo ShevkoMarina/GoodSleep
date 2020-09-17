@@ -4,36 +4,31 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.app.TimePickerDialog;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.TimePicker;
-import android.widget.Toast;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class CardActivity extends AppCompatActivity {
 
+    private static CountDownTimer countDownTimer;
+    public static long timeLeftInMilliseconds;
+    private static boolean timerIsRunning;
+    private static boolean timerFinishedWithNull = false;
     ImageButton mPauseButton, mAddButton;
     SeekBar mVolumeBar;
     int tHours, tMinute;
-    TextView tvTimer, tvSoundName;
-    MediaPlayer mPlayer;
+    static TextView tvTimer, tvSoundName;
+    static MediaPlayer mPlayer;
     AudioManager mAudioManager;
     ImageView mCardActivityBackground;
     int maxVolume;
@@ -92,11 +87,13 @@ public class CardActivity extends AppCompatActivity {
                     mPlayer.pause();
                     mPauseButton.setImageResource(R.drawable.play_icon);
                     isMusicPlaying = false;
+                    countDownTimer.cancel();
                 }
                 else {
                     mPlayer.start();
                     mPauseButton.setImageResource(R.drawable.pause_icon);
                     isMusicPlaying = true;
+                    countDownTimer.start();
                 }
             }
         });
@@ -149,49 +146,7 @@ public class CardActivity extends AppCompatActivity {
         mPlayer.stop();
     }
 
-    private void stopPlay() {
-        mPlayer.stop();
-        try {
-            mPlayer.prepare();
-            mPlayer.seekTo(0);
-        }
-        catch (Throwable t) {
-            Toast.makeText(this, t.getMessage(), Toast.LENGTH_SHORT).show();
-        }
-    }
-
-
     private void InitTimePicker() {
-        /*
-        tvTimer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                TimePickerDialog timePickerDialog = new TimePickerDialog(
-                        CardActivity.this,
-                        android.R.style.Theme_Holo_Dialog_NoActionBar_MinWidth,
-                        new TimePickerDialog.OnTimeSetListener() {
-                            @Override
-                            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                                tHours = hourOfDay;
-                                tMinute = minute;
-                                String time = tHours + ":" + tMinute;
-                                SimpleDateFormat f24Hours = new SimpleDateFormat("HH:mm");
-                                try {
-                                    Date date = f24Hours.parse(time);
-                                    SimpleDateFormat f12Hours = new SimpleDateFormat("hh:mm aa");
-                                    tvTimer.setText(f12Hours.format(date));
-                                } catch (ParseException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        }, 12, 0, false
-                );
-                timePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                timePickerDialog.updateTime(tHours, tMinute);
-                timePickerDialog.show();
-            }
-        });
-         */
 
         tvTimer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -208,6 +163,7 @@ public class CardActivity extends AppCompatActivity {
 
 
     private void InitAddButton() {
+        /*
         mAddButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -219,5 +175,59 @@ public class CardActivity extends AppCompatActivity {
                 //  transaction.add(R.id.sound_fragment_container, fragment).commit();
             }
         });
+
+         */
+        mAddButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CardActivity.this, GifActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    public static void StartTimer() {
+        if (!timerIsRunning) {
+            countDownTimer = new CountDownTimer(timeLeftInMilliseconds, 1000) {
+                @Override
+                public void onTick(long i) {
+                    timeLeftInMilliseconds = i;
+                    updateTimer();
+                }
+
+                @Override
+                public void onFinish() {
+                    tvTimer.setText("Timer");
+                    timerIsRunning = false;
+                    mPlayer.seekTo(0);
+                    mPlayer.stop();
+                }
+            }.start();
+        }
+        timerIsRunning = true;
+    }
+
+    public static void StopTimer() {
+        if (timerIsRunning) {
+            countDownTimer.cancel();
+            timerIsRunning = false;
+        }
+    }
+
+    public static void updateTimer() {
+        int hours = (int) timeLeftInMilliseconds / 3600000;
+        int minute = (int) timeLeftInMilliseconds % 3600000 / 60000;
+        int seconds = (int) timeLeftInMilliseconds %  60000 / 1000;
+        String timeLeftText = "";
+
+        if (hours > 0) {
+            timeLeftText += hours + ":";
+        }
+        timeLeftText += "" + minute;
+        timeLeftText += ":";
+        if (seconds < 10) timeLeftText += "0";
+        timeLeftText += seconds;
+
+        tvTimer.setText(timeLeftText);
     }
 }
