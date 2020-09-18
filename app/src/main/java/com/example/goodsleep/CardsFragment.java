@@ -11,15 +11,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Random;
 
 public class CardsFragment extends Fragment {
 
+    private ArrayList<SoundItem> mNatureItems;
+    private ArrayList<SoundItem> mSpaceItems;
     private ArrayList<SoundItem> mRainItems;
     private ArrayList<SoundItem> mSeaItems;
     private ArrayList<SoundItem> mNightItems;
@@ -99,21 +103,36 @@ public class CardsFragment extends Fragment {
 
     private void initCardsRecyclerView(View view) {
         mMainRecyclerView = view.findViewById(R.id.main_recycler_view);
-        mMainRecyclerView.setHasFixedSize(true);
-        mMainRecyclerView.setItemViewCacheSize(18);
-        mMainRecyclerView.setDrawingCacheEnabled(true);
-        mMainRecyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_LOW);
         mMainRecyclerView.setLayoutManager(new GridLayoutManager(view.getContext(), 2));
         mMainRecyclerView.setAdapter(mCardsAdapter);
     }
 
     private void createAllSoundItems() {
         mAllItems = new ArrayList<>();
-        for (int i = 0; i < mRainItems.size(); i++) {
-            mAllItems.add(mRainItems.get(i));
-            mAllItems.add(mSeaItems.get(i));
-            mAllItems.add(mNightItems.get((i < 2) ? i : 0));
+        int count = maxItemsSize();
+
+        for (int i = 0; i < count; i++) {
+            if (mRainItems.size() > i) {
+                mAllItems.add(mRainItems.get(i));
+            }
+            if (mSeaItems.size() > i) {
+                mAllItems.add(mSeaItems.get(i));
+            }
+            if (mNightItems.size() > i) {
+                mAllItems.add(mNightItems.get(i));
+            }
         }
+    }
+
+    private int maxItemsSize() {
+        List<Integer> sizes = new ArrayList<>();
+
+        sizes.add(mRainItems.size());
+        sizes.add(mNightItems.size());
+        sizes.add(mSeaItems.size());
+        //sizes.add(mNatureItems.size());
+
+        return Collections.max(sizes);
     }
 
     private void createRainSoundItems() {
@@ -140,5 +159,9 @@ public class CardsFragment extends Fragment {
         mNightItems = new ArrayList<>();
         mNightItems.add(new SoundItem(R.drawable.windy_night_low, R.drawable.windy_night, "Windy Night", new int[] { R.raw.windy_night }));
         mNightItems.add(new SoundItem(R.drawable.night_wildlife_low, R.drawable.night_wildlife, "Night Wildlife", new int[] { R.raw.night_wildlife }));
+        mNightItems.add(new SoundItem(R.drawable.wind_howling_low, R.drawable.wind_howling, "Wind Howling", new int[] { R.raw.wind_howling }));
+        mNightItems.add(new SoundItem(R.drawable.night_city_low, R.drawable.night_city, "Night City", new int[] { R.raw.night_city }));
+        mNightItems.add(new SoundItem(R.drawable.rainy_night_low, R.drawable.rainy_night, "Rainy Night", new int[] { R.raw.rainy_night }));
+        mNightItems.add(new SoundItem(R.drawable.night_by_the_beach_low, R.drawable.night_by_the_beach, "Night By The Beach", new int[] { R.raw.night_by_the_beach }));
     }
 }
