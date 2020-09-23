@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.WindowManager;
 
 import java.util.ArrayList;
@@ -50,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
                 super.onPageSelected(position);
                 if (position == NUM_PAGES - 2) {
                     mButtonsRecyclerView.scrollToPosition(NUM_PAGES - 1);
+                } else if (position == 1) {
+                    mButtonsRecyclerView.scrollToPosition(position - 1);
                 } else {
                     mButtonsRecyclerView.scrollToPosition(position);
                 }
@@ -92,12 +93,13 @@ public class MainActivity extends AppCompatActivity {
         mCategoryButtons.add(new CategoryButton("sea"));
         mCategoryButtons.add(new CategoryButton("night"));
         mCategoryButtons.add(new CategoryButton("nature"));
+        mCategoryButtons.add(new CategoryButton("space"));
     }
 
     private void initButtonsRecyclerView() {
         mButtonsRecyclerView = findViewById(R.id.buttons_recycler_view);
         mButtonsRecyclerView.setHasFixedSize(true);
-        mButtonsRecyclerView.setItemViewCacheSize(5);
+        mButtonsRecyclerView.setItemViewCacheSize(6);
         mButtonsRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         mButtonsRecyclerView.setAdapter(mButtonsAdapter);
     }
