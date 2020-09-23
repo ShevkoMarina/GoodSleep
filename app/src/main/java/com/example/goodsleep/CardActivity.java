@@ -76,6 +76,7 @@ public class CardActivity extends AppCompatActivity {
         mVolumeBar.setProgress(currentVolume);
 
         mPlayer.start();
+        mPlayer.setLooping(true);
 
     }
 
