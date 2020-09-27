@@ -8,11 +8,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.WindowManager;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private static List<CategoryButton> mCategoryButtons;
     private RecyclerView mButtonsRecyclerView;
     private static ButtonsAdapter mButtonsAdapter;
+    private BottomNavigationView mBottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,16 +34,31 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        getWindow().setFlags(
-                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
-        );
-
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION, WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
 
         mViewPager = findViewById(R.id.main_view_pager);
         mFragmentStateAdapter = new ScreenSlidePagerAdapter(this);
         mViewPager.setAdapter(mFragmentStateAdapter);
+        mBottomNavigationView = findViewById(R.id.bottom_navigation);
+        mBottomNavigationView.setSelectedItemId(R.id.home);
+
+        mBottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId())
+                {
+                    case R.id.home:
+
+                        return true;
+                    case R.id.fav:
+                        Intent intent = new Intent(MainActivity.this, FavoritesActivity.class);
+                        startActivity(intent);
+                        return true;
+                }
+
+                return false;
+            }
+        });
 
         mViewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
@@ -117,27 +134,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu, menu);
-
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
     protected void onResume() {
         super.onResume();
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
-//        switch (item.getItemId()) {
-//            default:
-//                break;
-//        }
-
-        return super.onOptionsItemSelected(item);
     }
 }

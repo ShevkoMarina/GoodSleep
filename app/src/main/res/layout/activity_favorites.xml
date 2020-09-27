@@ -12,7 +12,7 @@
     <com.scwang.wave.MultiWaveHeader
         android:id="@+id/waveHeader"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="55dp"
         app:mwhVelocity="1"
         app:mwhProgress="1"
         app:mwhGradientAngle="45"
@@ -23,24 +23,17 @@
         app:mwhWaves="MultiWave"
         app:layout_constraintTop_toTopOf="parent"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/buttons_recycler_view"
-        android:layout_marginTop="85dp"
-        android:layout_width="match_parent"
-        android:layout_height="35dp"/>
-
     <LinearLayout
+        android:layout_marginTop="60dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <androidx.viewpager2.widget.ViewPager2
-            android:layout_marginTop="128dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/fav_cards_rv"
             android:layout_weight="0.97"
-            android:orientation="horizontal"
-            android:id="@+id/main_view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:background="@color/darkBlue"/>
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
