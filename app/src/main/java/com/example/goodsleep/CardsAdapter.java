@@ -57,7 +57,6 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.CardViewHold
     @NonNull
     @Override
     public CardsAdapter.CardViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        Log.d("Adapter", "onCreateViewHolder");
         return new CardsAdapter.CardViewHolder(
                 LayoutInflater.from(parent.getContext()).inflate(
                         R.layout.card_item,
@@ -69,7 +68,6 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.CardViewHold
 
     @Override
     public void onBindViewHolder(@NonNull CardsAdapter.CardViewHolder holder, int position) {
-        Log.d("Adapter", "onBindViewHolder");
         holder.bind(mSoundItems.get(position));
     }
 

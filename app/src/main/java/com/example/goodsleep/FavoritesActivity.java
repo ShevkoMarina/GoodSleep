@@ -32,8 +32,7 @@ public class FavoritesActivity extends AppCompatActivity {
                 switch (item.getItemId())
                 {
                     case R.id.home:
-                        Intent intent = new Intent(FavoritesActivity.this, MainActivity.class);
-                        startActivity(intent);
+                        finish();
                         return true;
                     case R.id.fav:
                         return true;
@@ -47,6 +46,7 @@ public class FavoritesActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        mBottomNavigationView.setSelectedItemId(R.id.fav);
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 }

@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Random;
@@ -109,11 +110,29 @@ public class CardsFragment extends Fragment {
 
     private void createAllSoundItems() {
         mAllItems = new ArrayList<>();
-        for (int i = 0; i < mRainItems.size(); i++) {
-            mAllItems.add(mRainItems.get(i));
-            mAllItems.add(mSeaItems.get(i));
-            mAllItems.add(mNightItems.get((i < 2) ? i : 0));
+        int count = maxItemsSize();
+
+        for (int i = 0; i < count; i++) {
+            if (mRainItems.size() > i) {
+                mAllItems.add(mRainItems.get(i));
+            }
+            if (mSeaItems.size() > i) {
+                mAllItems.add(mSeaItems.get(i));
+            }
+            if (mNightItems.size() > i) {
+                mAllItems.add(mNightItems.get(i));
+            }
         }
+    }
+
+    private int maxItemsSize() {
+        List<Integer> sizes = new ArrayList<>();
+        sizes.add(mRainItems.size());
+        sizes.add(mNightItems.size());
+        sizes.add(mSeaItems.size());
+        //sizes.add(mNatureItems.size());
+
+        return Collections.max(sizes);
     }
 
     private void createRainSoundItems() {

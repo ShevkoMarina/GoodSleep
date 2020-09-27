@@ -23,9 +23,9 @@ public class MainActivity extends AppCompatActivity {
     private static final int NUM_PAGES = 5;
     private ViewPager2 mViewPager;
     private FragmentStateAdapter mFragmentStateAdapter;
-    private static List<CategoryButton> mCategoryButtons;
+    private List<CategoryButton> mCategoryButtons;
     private RecyclerView mButtonsRecyclerView;
-    private static ButtonsAdapter mButtonsAdapter;
+    private ButtonsAdapter mButtonsAdapter;
     private BottomNavigationView mBottomNavigationView;
 
     @Override
@@ -34,7 +34,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION, WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION,
+                WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
 
         mViewPager = findViewById(R.id.main_view_pager);
         mFragmentStateAdapter = new ScreenSlidePagerAdapter(this);
@@ -136,6 +137,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        mBottomNavigationView.setSelectedItemId(R.id.home);
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 }
