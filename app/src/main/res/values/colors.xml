@@ -5,4 +5,5 @@
     <color name="colorAccent">#FFFFFF</color>
     <color name="blackBlue">#040425</color>
     <color name="darkBlue">#0C0C39</color>
+    <color name="transparent">#00FFFFFF</color>
 </resources>

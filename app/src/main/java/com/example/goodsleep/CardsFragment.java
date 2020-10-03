@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,8 +47,7 @@ public class CardsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        mCardsAdapter = new CardsAdapter();
+        mCardsAdapter = new CardsAdapter(getContext());
 
         if (getArguments() != null) {
             mPosition = getArguments().getInt(POSITION);
@@ -87,6 +87,7 @@ public class CardsFragment extends Fragment {
 
     private void setCardsAdapter(final ArrayList<SoundItem> list) {
         mCardsAdapter.setItems(list);
+
         mCardsAdapter.setOnItemClickListener(new CardsAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
@@ -95,6 +96,19 @@ public class CardsFragment extends Fragment {
                 Objects.requireNonNull(getContext()).startActivity(intent);
             }
         });
+
+        mCardsAdapter.setOnFavClickListener(new CardsAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                SoundItem sd = list.get(position);
+                if (sd.isFavorite()) {
+                    sd.setFavorite(false);
+                } else {
+                    sd.setFavorite(true);
+                }
+            }
+        });
+
         mMainRecyclerView.setAdapter(mCardsAdapter);
     }
 

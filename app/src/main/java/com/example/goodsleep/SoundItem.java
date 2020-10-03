@@ -9,6 +9,15 @@ public class SoundItem implements Parcelable {
     private int imageSrcLow;
     private String name;
     private int[] SoundTracks;
+    private boolean isFavorite;
+
+    public boolean isFavorite() {
+        return isFavorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        isFavorite = favorite;
+    }
 
     public int getImageSrcLow() {
         return imageSrcLow;

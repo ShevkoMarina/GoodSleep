@@ -12,7 +12,7 @@
     <com.scwang.wave.MultiWaveHeader
         android:id="@+id/waveHeader"
         android:layout_width="match_parent"
-        android:layout_height="55dp"
+        android:layout_height="80dp"
         app:mwhVelocity="1"
         app:mwhProgress="1"
         app:mwhGradientAngle="45"
@@ -24,7 +24,7 @@
         app:layout_constraintTop_toTopOf="parent"/>
 
     <LinearLayout
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="85dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
