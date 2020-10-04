@@ -11,14 +11,13 @@ import androidx.viewpager2.widget.ViewPager2;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,9 +34,6 @@ public class MainActivity extends AppCompatActivity {
         setTheme(R.style.AppTheme_ActionBar_Transparent);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION,
-                WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
 
         mViewPager = findViewById(R.id.main_view_pager);
         mFragmentStateAdapter = new ScreenSlidePagerAdapter(this);
@@ -82,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
 
         initButtonsRecyclerView();
         setCategoryButtons();
+        Objects.requireNonNull(getSupportActionBar()).setTitle(null);
     }
 
     private static class ScreenSlidePagerAdapter extends FragmentStateAdapter {

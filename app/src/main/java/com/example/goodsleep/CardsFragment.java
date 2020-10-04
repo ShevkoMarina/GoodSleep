@@ -7,25 +7,21 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
-import java.util.Random;
 
 public class CardsFragment extends Fragment {
 
     private ArrayList<SoundItem> mRainItems;
     private ArrayList<SoundItem> mSeaItems;
     private ArrayList<SoundItem> mNightItems;
-    private ArrayList<SoundItem> mAllItems;
+    public static ArrayList<SoundItem> mAllItems;
     private RecyclerView mMainRecyclerView;
     private CardsAdapter mCardsAdapter;
     private static int mPosition;
@@ -47,7 +43,7 @@ public class CardsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mCardsAdapter = new CardsAdapter(getContext());
+        mCardsAdapter = new CardsAdapter();
 
         if (getArguments() != null) {
             mPosition = getArguments().getInt(POSITION);
@@ -97,27 +93,11 @@ public class CardsFragment extends Fragment {
             }
         });
 
-        mCardsAdapter.setOnFavClickListener(new CardsAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(int position) {
-                SoundItem sd = list.get(position);
-                if (sd.isFavorite()) {
-                    sd.setFavorite(false);
-                } else {
-                    sd.setFavorite(true);
-                }
-            }
-        });
-
         mMainRecyclerView.setAdapter(mCardsAdapter);
     }
 
     private void initCardsRecyclerView(View view) {
         mMainRecyclerView = view.findViewById(R.id.main_recycler_view);
-        mMainRecyclerView.setHasFixedSize(true);
-        mMainRecyclerView.setItemViewCacheSize(18);
-        mMainRecyclerView.setDrawingCacheEnabled(true);
-        mMainRecyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_LOW);
         mMainRecyclerView.setLayoutManager(new GridLayoutManager(view.getContext(), 2));
         mMainRecyclerView.setAdapter(mCardsAdapter);
     }

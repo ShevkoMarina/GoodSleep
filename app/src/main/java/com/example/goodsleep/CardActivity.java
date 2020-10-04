@@ -1,15 +1,21 @@
 package com.example.goodsleep;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
@@ -17,6 +23,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class CardActivity extends AppCompatActivity {
 
@@ -27,31 +34,26 @@ public class CardActivity extends AppCompatActivity {
     ImageButton mPauseButton, mAddButton;
     SeekBar mVolumeBar;
     int tHours, tMinute;
-    static TextView tvTimer, tvSoundName;
+    static TextView tvTimer;
     static MediaPlayer mPlayer;
     AudioManager mAudioManager;
     ImageView mCardActivityBackground;
     int maxVolume;
     boolean isMusicPlaying;
     FragmentManager fragmentManager;
+    private SoundItem mSoundItem;
+    private SharedPreferences mSharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_card);
 
-        getWindow().setFlags(
-                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
-        );
-
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION, WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-
+        mSharedPreferences = getSharedPreferences("FAV", MODE_PRIVATE);
         mPauseButton = findViewById(R.id.pauseButton);
         tvTimer = findViewById(R.id.timer_tv);
         mAddButton = findViewById(R.id. addSoundtrackButton);
         mVolumeBar = findViewById(R.id.volumeSeekBar);
-        tvSoundName = findViewById(R.id.soundName);
         mCardActivityBackground = findViewById(R.id.card_activity_background);
         isMusicPlaying = true;
 
@@ -63,11 +65,13 @@ public class CardActivity extends AppCompatActivity {
 
         // Get info
         Intent intent = getIntent();
-        SoundItem soundItem = intent.getParcelableExtra("Sound Item");
-        tvSoundName.setText(soundItem.getName());
-        mCardActivityBackground.setImageResource(soundItem.getImageSrc());
-        mPlayer = MediaPlayer.create(this, soundItem.getSoundTracks()[0]);
-
+        mSoundItem = intent.getParcelableExtra("Sound Item");
+        assert mSoundItem != null;
+        if (isFav(mSoundItem)) {
+            mSoundItem.setFavorite(true);
+        }
+        mCardActivityBackground.setImageResource(mSoundItem.getImageSrc());
+        mPlayer = MediaPlayer.create(this, mSoundItem.getSoundTracks()[0]);
 
         mAudioManager = (AudioManager) getSystemService(AUDIO_SERVICE);
         maxVolume = mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
@@ -78,6 +82,57 @@ public class CardActivity extends AppCompatActivity {
         mPlayer.start();
         mPlayer.setLooping(true);
 
+        ActionBar actionBar = getSupportActionBar();
+        assert actionBar != null;
+        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        actionBar.setCustomView(R.layout.actionbar_centertext);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        ((TextView)actionBar.getCustomView().findViewById(R.id.tvTitle)).setText(mSoundItem.getName());
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.fav_menu, menu);
+
+        if (mSoundItem.isFavorite()) {
+            menu.getItem(0).setIcon(R.drawable.outline_favorite_white);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+            case R.id.fav:
+                if (mSoundItem.isFavorite()) {
+                    item.setIcon(R.drawable.outline_favorite_border_white);
+                    mSoundItem.setFavorite(false);
+                    removeFavItem(mSoundItem.getName());
+                } else {
+                    item.setIcon(R.drawable.outline_favorite_white);
+                    mSoundItem.setFavorite(true);
+                    saveFavItem(mSoundItem.getName());
+                }
+        }
+        return true;
+    }
+
+    private void saveFavItem(String name) {
+        mSharedPreferences.edit().putString(name, "fav").apply();
+        Toast.makeText(this, "Added to favorites", Toast.LENGTH_SHORT).show();
+    }
+
+    private void removeFavItem(String name) {
+        mSharedPreferences.edit().remove(name).apply();
+        Toast.makeText(this, "Removed from favorites", Toast.LENGTH_SHORT).show();
+    }
+
+    private boolean isFav(SoundItem soundItem) {
+        return mSharedPreferences.contains(soundItem.getName());
     }
 
     private void InitPause() {
